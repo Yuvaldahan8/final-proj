@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Details</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Supplier Details</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Supplier Details</h2>
+            <ul>
+                <li><strong>שם:</strong> <%= supplier.name %></li>
+                <li><strong>אימייל:</strong> <%= supplier.email %></li>
+                <li><strong>טלפון:</strong> <%= supplier.phone %></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Actions</h2>
+            <a href="/suppliers">Return to the suppliers list</a>
+        </section>
+    </main>
+    <footer>
+       
+    </footer>
+</body>
+</html>

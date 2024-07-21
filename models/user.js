@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["admin", "user"], default: "user" },
-    cart: {type: Array , default:[]}
+    cart: {type: Array , default:[]},
     //להוסיף פה מערך של מוצרים שיש ללקוח בסל עם אפשרויות עריכה לכל מוצרוכל הדרישות שכתובות בדף על המודלים
 });
 

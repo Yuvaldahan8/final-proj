@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Products</title>
+        <link
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/admin">Home</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">Welcome, <%= user.name %>!</span>
+                <a href="/logout" class="btn btn-danger ml-3">Logout</a>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <h1>Manage Products</h1>
+            <form action="/admin/products" method="POST">
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Product Name" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="number" name="price" class="form-control" placeholder="Product Price" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="description" class="form-control" placeholder="Product Description">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="image" class="form-control" placeholder="Product Image URL" required>
+                </div>
+
+                <div class="form-group">
+                    <select name="category" class="form-control" required>
+                        <% categories.forEach(category => { %>
+                            <option value="<%= category._id %>"><%= category.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                    
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </form>
+
+            <h2 class="mt-5">Existing Products</h2>
+            <ul class="list-group mt-3">
+                <% products.forEach(product => { %>
+                    <li class="list-group-item">
+                        <h3><%= product.name %></h3>
+                        <p>Price: <%= product.price %></p>
+                        <p>Category: <%= product.category.name %></p>
+                        <p>Description: <%= product.description %></p>
+                        <img src="<%= product.image %>" alt="<%= product.name %>" width="100" height="100">
+                        
+                        <form action="/admin/products/<%= product._id %>?_method=PUT" method="POST" style="display: iniline;">
+                            <input type="text" name="name" placeholder="New Name" required>
+                            <input type="number" name="price" placeholder="New Price" required>
+                            <input type="text" name="description" placeholder="New Description">
+                            <input type="text" name="naimageme" placeholder="New Image URL" required>
+                            <button type="submit" class="btn btn-warning btn-sm">Edit</button>
+                        </form>
+
+                        <form action="/admin/products/<%= product._id %>?_method=DELETE" method="POST" style="display: iniline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

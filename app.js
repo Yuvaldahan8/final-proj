@@ -7,6 +7,7 @@ const connectDB = require("./config");
 // Routes
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const supplierRoutes = require("./routes/supplierroutes");
 
 const app = express();
 
@@ -19,7 +20,6 @@ app.use(express.static('public'));
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -36,6 +36,7 @@ app.set("view engine", "ejs");
 // Routes
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
+app.use("/suppliers", supplierroutes); 
 
 // Start the server
 app.listen(3000, () => {

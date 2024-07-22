@@ -21,6 +21,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
     session({
@@ -36,7 +37,7 @@ app.set("view engine", "ejs");
 // Routes
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
-app.use("/suppliers", supplierroutes); 
+app.use("/suppliers", supplierRoutes); 
 
 // Start the server
 app.listen(3000, () => {

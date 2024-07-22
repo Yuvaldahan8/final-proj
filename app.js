@@ -14,7 +14,6 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-// Serve static files from the 'public' directory
 app.use(express.static('public'));
 
 // Middleware

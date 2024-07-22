@@ -1,10 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const supplierController = require('../../controllers/supplierController');
 
-router.get('/', supplierController.getSuppliers);
-router.post('/', supplierController.createSupplier);
-router.put('/:id', supplierController.updateSupplier);
-router.delete('/:id', supplierController.deleteSupplier);
+router.post("/login", (req, res) => {
+    const { username, password } = req.body;
+    
+    if (username && password) {
+        req.session.user = {
+            username: username,
+            type: "supplier",
+        };
+        res.redirect("/supplier"); 
+    } else {
+        res.send("Invalid credentials");
+    }
+});
 
 module.exports = router;

@@ -3,29 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supplier Details</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Supplier Dashboard</title>
+    <link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
     <header>
-        <h1>Supplier Details</h1>
+        <h1>Supplier Dashboard</h1>
     </header>
     <main>
         <section>
-            <h2>Supplier Details</h2>
-            <ul>
-                <li><strong>שם:</strong> <%= supplier.name %></li>
-                <li><strong>אימייל:</strong> <%= supplier.email %></li>
-                <li><strong>טלפון:</strong> <%= supplier.phone %></li>
-            </ul>
+            <h2>Welcome <%= session.user.username %></h2>
+            <p>This is the supplier dashboard.</p>
         </section>
         <section>
-            <h2>Actions</h2>
-            <a href="/suppliers">Return to the suppliers list</a>
+            <h2>Supplier Details</h2>
+            <ul>
+                <li><strong>Name:</strong> <%= supplier.name %></li>
+                <li><strong>Email:</strong> <%= supplier.email %></li>
+                <li><strong>Phone:</strong> <%= supplier.phone %></li>
+            </ul>
         </section>
     </main>
     <footer>
-       
+        <a href="/logout">Logout</a>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

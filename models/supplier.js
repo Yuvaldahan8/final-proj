@@ -1,12 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const supplierSchema = new mongoose.Schema({
-    name: { type: String, required: true},
-    address: {type: String}, 
-    phone: {type: String},
-    email: {type: String, required: true, unique: true}
+const SupplierSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, enum: ["admin", "user", "supplier"], default: "supplier" }, // הוספתי את "supplier" לאפשרויות
 });
 
-const Supplier = mongoose.model('Supplier', supplierSchema);
-
-module.exports = Supplier;
+module.exports = mongoose.model("Supplier", SupplierSchema);

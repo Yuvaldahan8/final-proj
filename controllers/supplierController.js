@@ -1,4 +1,4 @@
-const Supplier = require('./models/Supplier');
+const Supplier = require('../models/supplier');
 
 
 exports.createSupplier = async (req, res) => {
@@ -36,4 +36,36 @@ exports.deleteSupplier = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
+};
+
+
+exports.renderSupplierSignup = (req, res) => {
+    res.render("supplierSignup", { error: '' });
+};
+
+exports.signupSupplier = async (req, res) => {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+        return res.render("supplierSignup", { 
+            error: "One or more of the required fields are missing"
+        });
+    }
+
+    const existingSupplier = await Supplier.findOne({ email });
+    if (existingSupplier) {
+        return res.render("supplierSignup", { 
+            error: "Supplier already exists"
+        });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newSupplier = new Supplier({
+        name,
+        email,
+        role: 'Supplier',
+        password: hashedPassword
+    });
+
+    await newSupplier.save();
+    res.redirect("/login?message=Supplier created successfully");
 };

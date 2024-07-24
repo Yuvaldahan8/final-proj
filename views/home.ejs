@@ -8,10 +8,12 @@
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             rel="stylesheet"
     />
+    <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
     <a class="navbar-brand" href="#">Nursery</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -40,8 +42,8 @@
     </div>
 </nav>
 
-<div class="container mt-4">
-    <h1>Products</h1>
+<div class="container mt-4" class="background-home">
+    <h1 id="productTitel">Products</h1>
     <div class="row">
         <% products.forEach(product => { %>
         <div class="col-md-4">
@@ -52,7 +54,7 @@
                     <form action="/cart" method="POST">
                         <input type="hidden" name="productId" value="<%= product._id %>">
                         <input type="number" name="quantity" min="1" value="1" required>
-                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                        <button type="submit" class="btn btn-primary" id="addToCardBTN">Add to Cart</button>
                     </form>
                 </div>
             </div>

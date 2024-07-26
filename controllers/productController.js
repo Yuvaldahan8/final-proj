@@ -1,6 +1,7 @@
 const Category = require("../models/category");
 const Product = require("../models/product");
 const Order = require("../models/order");
+const User = require("../models/user");
 
 exports.renderProducts = async(req, res) => {
     try {
@@ -9,11 +10,20 @@ exports.renderProducts = async(req, res) => {
         }
         else {
             const categories = await Category.find();
-            const products = await Product.find().populate('category');
+            const suppliers = await User.find({ role: 'supplier' });
+            
+            let products;
+            if (req.session.user.role === "supplier") {
+                products = await Product.find({ supplier: req.session.user._id }).populate('category').populate('supplier'); 
+            }
+            else {
+                products = await Product.find().populate('category').populate('supplier');
+            }
 
-            res.render("admin/products", { 
+            res.render(`${req.session.user.role}/products`, { 
                 categories, 
                 products, 
+                suppliers,
                 user: req.session.user 
             });
         }
@@ -21,9 +31,9 @@ exports.renderProducts = async(req, res) => {
     catch (error) {
         console.error(error);
         const categories = await Category.find();
-        const products = await Product.find().populate('category');
+        const products = await Product.find().populate('category').populate('supplier');
 
-        res.status(500).render("admin/products", { 
+        res.status(500).render(`${req.session.user.role}/products`, { 
             error: "An error occurred while fetching the products",
             user: req.session.user,
             categories,
@@ -34,12 +44,12 @@ exports.renderProducts = async(req, res) => {
 
 exports.addProduct = async(req, res) => {
     try {
-        const { name, price, category, description, image } = req.body;
-        if (!name || !price || !category || !image) {
+        const { name, price, category, description, image, supplier } = req.body;
+        if (!name || !price || !category || !image || !supplier) {
             const categories = await Category.find();
-            const products = await Product.find().populate('category');
+            const products = await Product.find().populate('category').populate('supplier');
 
-            return res.status(400).render("admin/products", { 
+            return res.status(400).render(`${req.session.user.role}/products`, { 
                 error: "Some fields are required",
                 user: req.session.user,
                 categories,
@@ -47,16 +57,16 @@ exports.addProduct = async(req, res) => {
             });
         }
 
-        const newProduct = new Product({ name, price, category, description, image });
+        const newProduct = new Product({ name, price, category, description, image, supplier });
         await newProduct.save();
-        res.redirect("/admin/products");
+        res.redirect(`/${req.session.user.role}/products`);
     }
     catch (error) {
         console.error(error);
         const categories = await Category.find();
-        const products = await Product.find().populate('category');
+        const products = await Product.find().populate('category').populate('supplier');
 
-        res.status(500).render("admin/products", { 
+        res.status(500).render(`${req.session.user.role}/products`, { 
             error: "An error occurred while adding the product",
             user: req.session.user,
             categories,
@@ -68,13 +78,13 @@ exports.addProduct = async(req, res) => {
 exports.editProduct = async(req, res) => {
     try {
         const { id } = req.params;
-        const { name, price, category, description, image } = req.body;
+        const { name, price, category, description, image, supplier } = req.body;
 
-        if (!name || !price || !category || !image) {
+        if (!name || !price || !category || !image || !supplier) {
             const categories = await Category.find();
-            const products = await Product.find().populate('category');
+            const products = await Product.find().populate('category').populate('supplier');
 
-            return res.status(400).render("admin/products", { 
+            return res.status(400).render(`${req.session.user.role}/products`, { 
                 error: "Some fields are required",
                 user: req.session.user,
                 categories,
@@ -82,15 +92,15 @@ exports.editProduct = async(req, res) => {
             });
         }
 
-        await Product.findByIdAndUpdate(id, { name, price, category, description, image });
-        res.redirect("/admin/products");
+        await Product.findByIdAndUpdate(id, { name, price, category, description, image, supplier });
+        res.redirect(`/${req.session.user.role}/products`);
     }
     catch (error) {
         console.error(error);
         const categories = await Category.find();
-        const products = await Product.find().populate('category');
+        const products = await Product.find().populate('category').populate('supplier');
         
-        res.status(500).render("admin/products", { 
+        res.status(500).render(`${req.session.user.role}/products`, { 
             error: "An error occurred while updating the product",
             user: req.session.user,
             categories,
@@ -103,14 +113,14 @@ exports.deleteProduct = async(req, res) => {
     try {
         const { id } = req.params;
         await Product.findByIdAndDelete(id);
-        res.redirect("/admin/products");
+        res.redirect(`/${req.session.user.role}/products`);
     }
     catch (error) {
         console.error(error);
         const categories = await Category.find();
-        const products = await Product.find().populate('category');
+        const products = await Product.find().populate('category').populate('supplier');
 
-        res.status(500).render("admin/products", { 
+        res.status(500).render(`${req.session.user.role}/products`, { 
             error: "An error occurred while deleting the product",
             user: req.session.user,
             categories,
@@ -155,7 +165,7 @@ exports.viewCart = async (req, res) => {
 
 exports.listProducts = async (req, res) => {
     try {
-        const products = await Product.find().populate('category');
+        const products = await Product.find().populate('category').populate('supplier');
         res.render("home", { 
             products, 
             user: req.sessions.user 
@@ -163,7 +173,7 @@ exports.listProducts = async (req, res) => {
     }
     catch (error) {
         console.error(error);
-        const products = await Product.find().populate('category');
+        const products = await Product.find().populate('category').populate('supplier');
 
         res.status(500).render("home", { 
             products, 

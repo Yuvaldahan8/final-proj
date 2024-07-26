@@ -7,7 +7,7 @@ exports.listCategories = async (req, res) => {
     }
     else {
         const categories = await Category.find().populate('products');
-        res.render("admin/categories", { categories, user: req.session.user });
+        res.render(`${req.session.user.role}/categories`, { categories, user: req.session.user });
     }
 };
 
@@ -15,21 +15,21 @@ exports.addCategory = async (req, res) => {
     try {
         const { name } = req.body;
         if (!name) {
-            return res.status(400).render("admin/categories", { error: "Category name is required" });
+            return res.status(400).render(`${req.session.user.role}/categories`, { error: "Category name is required" });
         }
 
         const existingCategory = await Category.findOne({ name });
         if (existingCategory) {
-            return res.status(400).render("admin/categories", { error: "Category already exists" });
+            return res.status(400).render(`${req.session.user.role}/categories`, { error: "Category already exists" });
         }
         
         const newCategory = new Category({ name });
         await newCategory.save();
-        res.redirect("/admin/categories");
+        res.redirect(`/${req.session.user.role}/categories`);
     }
     catch (err) {
         console.error(err);
-        return res.status(500).render("admin/categories", { error: "An error occurred while adding the category" });
+        return res.status(500).render(`${req.session.user.role}/categories`, { error: "An error occurred while adding the category" });
     }
 };
 
@@ -39,15 +39,15 @@ exports.editCategory = async (req, res) => {
         const { name } = req.body;
 
         if (!name) {
-            return res.status(400).render("admin/categories", { error: "Category name is required" });
+            return res.status(400).render(`${req.session.user.role}/categories`, { error: "Category name is required" });
         }
         
         await Category.findByIdAndUpdate(id, { name });
-        res.redirect("/admin/categories");
+        res.redirect(`/${req.session.user.role}/categories`);
     }
     catch (err) {
         console.error(err);
-        return res.status(500).render("admin/categories", { error: "An error occurred while updating the category" });
+        return res.status(500).render(`${req.session.user.role}/categories`, { error: "An error occurred while updating the category" });
     }
 };
 
@@ -62,10 +62,10 @@ exports.deleteCategory = async (req, res) => {
         const { id } = req.params;
         await Product.deleteMany({ category: id });
         await Category.findByIdAndDelete(id);
-        res.redirect("/admin/categories");
+        res.redirect(`/${req.session.user.role}/categories`);
     }
     catch (err) {
         console.error(err);
-        return res.status(500).render("admin/categories", { error: "An error occurred while deleting the category" });
+        return res.status(500).render(`${req.session.user.role}/categories`, { error: "An error occurred while deleting the category" });
     }
 }

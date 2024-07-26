@@ -39,6 +39,7 @@
 
 body {
     background-color: #f8f9fa;
+    margin-bottom: 50px;
 }
 .navbar {
     background-color: #ffffff; 
@@ -47,6 +48,26 @@ body {
 .navbar-brand {
     font-weight: bold; 
 }
-.navbar-text {
-    margin-left: 870px; 
+
+img {
+    object-fit: cover;
+}
+
+.form-container {
+    display: flex;
+    flex-flow: wrap;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.input-container {
+    display: grid;
+    grid-template-rows: min-content auto;
+    align-items: center;
+}
+
+.input-container label {
+    font-size: 12px;
+    color: #929191;
+    margin-bottom: 5px;
 }

@@ -13,7 +13,7 @@ exports.renderHome = async (req, res) => {
     }
     else {
         const user = req.session.user;
-        const products = await Product.find().populate('category');
+        const products = await Product.find().populate('category').populate('supplier');
 
         if (user.role !== 'user') {
             res.redirect("/login?message=User is not logged in as user"); 
@@ -30,8 +30,6 @@ exports.renderHome = async (req, res) => {
 exports.renderSignup = (req, res) => {
     res.render("signup", { error: '' });
 };
-
-
 
 exports.logout = (req, res) => {
     if (req.session) {
@@ -57,6 +55,8 @@ exports.login = async (req, res) => {
 
         if (user.role === "admin") {
             res.redirect("/admin");
+        } else if (user.role === "supplier") {
+            res.redirect("/supplier");
         } else {
             res.redirect("/home");
         }

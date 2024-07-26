@@ -1,18 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
     const images = document.querySelectorAll('.scroll-image');
-    let currentImageIndex = 0;
-
+    const imageCount = images.length;
+    const bodyPadding = 56; // הערך של padding-top של ה-body
+    
     window.addEventListener('scroll', function() {
-        const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        const imageIndex = Math.floor(scrollPercentage / (100 / images.length));
-
-        if (imageIndex !== currentImageIndex) {
-        images[currentImageIndex].classList.remove('active');
-        images[imageIndex].classList.add('active');
-        currentImageIndex = imageIndex;
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight - bodyPadding;
+      const scrollPercentage = scrollPosition / (documentHeight - windowHeight);
+      
+      const imageIndex = Math.min(Math.floor(scrollPercentage * imageCount), imageCount - 1);
+      
+      images.forEach((img, index) => {
+        if (index === imageIndex) {
+          img.classList.add('active');
+        } else {
+          img.classList.remove('active');
         }
+      });
     });
-
+    
     // הצג את התמונה הראשונה בטעינה
     images[0].classList.add('active');
-});
+  });

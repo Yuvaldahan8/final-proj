@@ -12,11 +12,11 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Admin Dashboard</a>
+            <a class="navbar-brand" href="#">Supplier Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/admin">Home</a>
+                        <a class="nav-link" href="/supplier">Home</a>
                     </li>
                 </ul>
                 <span class="navbar-text">Welcome, <%= user.name %>!</span>
@@ -25,18 +25,48 @@
         </nav>
 
         <div class="container mt-4">
-            <h1>Manage Products</h1>
+            <h1>Add Product</h1>
+            <form action="/supplier/products" method="POST">
+                <input type="hidden" name="supplier" value="<%= user._id %>">
+
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Product Name" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="number" name="price" class="form-control" placeholder="Product Price" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="description" class="form-control" placeholder="Product Description">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="image" class="form-control" placeholder="Product Image URL" required>
+                </div>
+
+                <div class="form-group">
+                    <select name="category" class="form-control" required>
+                        <% categories.forEach(category => { %>
+                            <option value="<%= category._id %>"><%= category.name %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                    
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </form>
+
+            <h2 class="mt-5">Your Products</h2>
             <ul class="list-group mt-3">
                 <% products.forEach(product => { %>
                     <li class="list-group-item">
                         <h3><%= product.name %></h3>
                         <p>Price: $<%= product.price %></p>
-                        <p>Supplier: <%= product.supplier.name %></p>
                         <p>Category: <%= product.category.name %></p>
                         <p>Description: <%= product.description %></p>
                         <img src="<%= product.image %>" alt="<%= product.name %>" width="300" height="200">
                         
-                        <form class="form-container" action="/admin/products/<%= product._id %>?_method=PUT" method="POST" style="display: iniline;">
+                        <form class="form-container" action="/supplier/products/<%= product._id %>?_method=PUT" method="POST" style="display: iniline;">
                             <input type="hidden" name="supplier" value="<%= product.supplier %>">
                             
                             <div class="input-container">
@@ -71,7 +101,7 @@
                             <button type="submit" class="btn btn-warning btn-sm">Edit</button>
                         </form>
 
-                        <form action="/admin/products/<%= product._id %>?_method=DELETE" method="POST" style="display: iniline;">
+                        <form action="/supplier/products/<%= product._id %>?_method=DELETE" method="POST" style="display: iniline;">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </li>

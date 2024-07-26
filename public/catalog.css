@@ -65,23 +65,16 @@ body {
     gap: 10px;
   }
 
-  .image-container {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
+  .product-container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    text-align: center;
+    font-size: 18px;
   }
-  
-  .scroll-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-  }
-  
-  .scroll-image.active {
-    opacity: 1;
+
+  .product-container img {
+    margin: 0 auto 30px auto;
   }

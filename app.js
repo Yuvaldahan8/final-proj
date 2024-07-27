@@ -16,8 +16,6 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
-app.use(express.static('public'));
-
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));

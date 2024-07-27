@@ -39,6 +39,7 @@ app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
+app.use(express.static('public'));
 
 // Start the server
 app.listen(3000, () => {

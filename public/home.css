@@ -11,6 +11,7 @@ body, html {
   overflow-y: auto;
   overflow-x: hidden;
   perspective: 1px;
+
 }
 
 .parallax-section {
@@ -78,8 +79,9 @@ body, html {
   z-index: 3;
   color: #333;
   text-align: center;
-  padding: 20px;
-  background-color: rgba(245, 232, 213, 0.7);
+  font-family: 'Calibri';
+  padding: 60px;
+  background-color: rgba(245, 232, 213, 0.526);
   border-radius: 10px;
   transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);

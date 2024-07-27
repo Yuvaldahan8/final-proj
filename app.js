@@ -9,12 +9,13 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
-app.use(express.static('public'));
 
 const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+app.use(express.static('public'));
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -41,5 +42,5 @@ app.use("/catalog", catalogRoutes);
 
 // Start the server
 app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+    console.log("Server is running on port 3000");
 });

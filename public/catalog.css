@@ -46,10 +46,23 @@ card-body::before {
   top: 0;
   left: 0;
   width: 100%;
+<<<<<<< Updated upstream
   height: 175px; /* גובה התמונה */
   background-color: rgba(180, 210, 186, 0.5); /* צבע חצי שקוף מתחת לתמונה */
   border-radius: 10px;
   z-index: -1; /* הנחת הצבע מתחת לתמונה */
+=======
+  height: 170px; 
+  object-fit: contain; 
+  border-radius: 10px; 
+  margin-bottom: 15px; 
+  transition: transform 0.3s ease-in-out;
+
+}
+
+.card-image:hover {
+  transform: scale(1.03); 
+>>>>>>> Stashed changes
 }
 
 #topNavBarHome {
@@ -112,5 +125,7 @@ card-body::before {
 }
 
 .product-container img {
-  margin: 0 auto 30px auto;
+  width: 100%;
+  height: auto; 
+  border-radius: 10px;
 }

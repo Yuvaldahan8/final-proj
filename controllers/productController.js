@@ -158,9 +158,25 @@ exports.addToCart = async(req, res) => {
 }
 
 exports.viewCart = async (req, res) => {
-    const userId = req.session.user._id;
-    const order = await Order.findOne({ user: userId }).populate("products.product");
-    res.render("cart", { order, user: req.session.user });
+    try {
+        const userId = req.session.user._id;
+        const order = await Order.findOne({ user: userId }).populate("products.product");
+        
+        if (order && order.products) {
+            // סינון מוצרים שאינם קיימים יותר
+            order.products = order.products.filter(item => item.product != null);
+            await order.save(); // שמירת ההזמנה לאחר הסינון
+        }
+        
+        res.render("cart", { order, user: req.session.user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render("cart", { 
+            error: "An error occurred while fetching the cart",
+            user: req.session.user,
+            order: null
+        });
+    }
 }
 
 exports.listProducts = async (req, res) => {

@@ -27,6 +27,10 @@ exports.renderHome = async (req, res) => {
     }
 };
 
+exports.renderAbout = (req, res) => {
+    res.render('about', { error: '' });
+};
+
 exports.renderSignup = (req, res) => {
     res.render("signup", { error: '' });
 };
@@ -91,3 +95,5 @@ exports.signup = async (req, res) => {
     await newUser.save();
     res.redirect("/login?message=User created successfully");
 };
+
+

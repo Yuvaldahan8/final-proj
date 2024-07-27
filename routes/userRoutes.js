@@ -3,6 +3,7 @@ const router = express.Router();
 
 const userController = require("../controllers/userController");
 const productController = require("../controllers/productController");
+no
 
 router.get("/", userController.renderLogin);
 router.get("/home", userController.renderHome);
@@ -15,5 +16,7 @@ router.post("/login", userController.login);
 
 router.get("/cart", productController.viewCart);
 router.post("/cart", productController.addToCart);
+
+router.get("/about", userController.renderAbout);
 
 module.exports = router;

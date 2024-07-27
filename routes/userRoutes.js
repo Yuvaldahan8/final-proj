@@ -16,6 +16,5 @@ router.post("/login", userController.login);
 router.get("/cart", productController.viewCart);
 router.post("/cart", productController.addToCart);
 
-router.get("/about", userController.renderAbout);
 
 module.exports = router;

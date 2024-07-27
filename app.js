@@ -9,6 +9,7 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
+app.use(express.static('public'));
 
 const app = express();
 

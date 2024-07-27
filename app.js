@@ -9,7 +9,6 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
-app.use(express.static('public'));
 
 const app = express();
 
@@ -38,6 +37,7 @@ app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
+app.use(express.static('public'));
 
 // Start the server
 app.listen(3000, () => {

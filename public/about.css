@@ -1,33 +1,49 @@
-body{
+body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    padding-top: 56px;
-    background-image:  linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    padding-top: 56px; /* משאיר מקום ל-navbar */
+    margin: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    
 }
-h1{
-    margin-top: 30PX;
-    font-family: Arial, sans-serif;
+#topNavBarHome {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    font-family: 'Calibri';
+  }
+
+h1 {
+    margin-top: 30px;
     text-align: center;
-    font-size:40px;
+    font-size: 40px;
 }
-.card{
-    margin-left: 30px;
-    margin-right: 30px;
+
+.aboutCard {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: rgb(0, 0, 0);
     text-align: center;
+    font-size: 18px;
+    background-color: rgba(180, 210, 186, 0.848);
+    border-radius: 10px; 
+    font-family:  Calibri;
 }
-founder-title{
-    font-family: Arial, sans-serif;
+
+.founder-title {
     text-align: center;
-    font-size:30px;
+    font-size: 30px;
 }
-.fonders-name{
+
+.founders-name {
     word-spacing: 10px;
-    font-family: Arial, sans-serif;
     text-align: center;
-    font-size:25px;
+    font-size: 25px;
 }

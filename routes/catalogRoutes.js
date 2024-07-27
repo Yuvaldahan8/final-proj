@@ -7,3 +7,4 @@ router.get("/", catalogController.renderCatalog);
 router.get("/:id", catalogController.getProductById);
 
 module.exports = router;
+

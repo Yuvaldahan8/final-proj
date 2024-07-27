@@ -1,21 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>about</title>
-        <link rel="stylesheet" href="about.css">
-    </head>
-    <body>
-        <h1> <b>ABOUT US:</b></h1>
-        <div class="card" >
-            <div class="card-body">
-              <h5 class="founder-title">The Founders Of The Nursery : </h5>
-              <h6 class="fonders-name"> YUVAL  OMRI  MOSHIKO  SAGIV  INBAR</h6>
-              <p class="card-text">Kolam Nursery is originally a new online nursery that specializes in spectacular house plants at affordable prices, the nursery produces and grows trees and ornamental plants on extensive areas covering about 1200 dunams of growing areas in the lowlands. Kolam Nursery is one of the largest nurseries in Israel and provides a wide range of products marketed at attractive prices from manufacturer to consumer.
-            </p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="about.css">
+    <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    rel="stylesheet"
+/>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
+    <a class="navbar-brand" href="#">Nursery</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse mr-auto">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/catalog">Catalog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cart">Cart</a>
+            </li>
+        </ul>
+        <span class="navbar-text ml-auto">Welcome, <%= user.name %>!</span>
+        <a href="/logout" class="btn btn-danger ml-3">Logout</a>
+    </div>
+</nav>
+
+    <div class="aboutCard">
+        <div class="card-body">  
+            <h1><b>ABOUT US:</b></h1>
+            <h5 class="founder-title">The Founders Of The Nursery:</h5>
+            <h6 class="founders-name">YUVAL OMRI MOSHIKO SAGIV INBAR</h6>
+            <p class="card-text">.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+</body>
 </html>

@@ -44,6 +44,30 @@
 
 <div class="container mt-4" class="background-home">
     <h1 id="productTitel">Products</h1>
+
+<form class="mb-4" method="GET" action="/catalog">
+    <div class="form-row">
+        <div class="col">
+            <input type="text" name="name" class="form-control" placeholder="Product Name">
+        </div>
+        <div class="col">
+            <select name="category" class="form-control">
+                <option value="">All Categories</option>
+                <% categories.forEach(category => { %>
+                    <option value="<%= category._id %>"><%= category.name %></option>
+                <% }); %>
+            </select>
+        </div>
+        <div class="col">
+            <input type="number" name="price" class="form-control" placeholder="Price">
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+
     <div class="row">
         <% products.forEach(product => { %>
         <div class="col-md-4">

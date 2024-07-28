@@ -91,3 +91,4 @@ exports.signup = async (req, res) => {
     await newUser.save();
     res.redirect("/login?message=User created successfully");
 };
+

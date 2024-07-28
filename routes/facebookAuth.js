@@ -81,4 +81,28 @@ router.get('/signout', (req, res) => {
   }
 });
 
+// // נתיב למחיקת נתוני משתמשים
+// router.post('/delete-user-data', async (req, res) => {
+//   try {
+//     const userId = req.body.user_id; // קבלת מזהה המשתמש מהבקשה
+
+//     if (!userId) {
+//       return res.status(400).json({ error: 'User ID is required' });
+//     }
+
+//     // מחיקת המשתמש ממסד הנתונים
+//     const result = await User.deleteOne({ accountId: userId });
+
+//     if (result.deletedCount === 0) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+
+//     // החזרת תגובה מוצלחת
+//     res.status(200).json({ message: 'User data deleted successfully' });
+//   } catch (error) {
+//     console.error('Error deleting user data:', error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
+
 module.exports = router;

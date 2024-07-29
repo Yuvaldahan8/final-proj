@@ -9,7 +9,7 @@ const averagePriceBySupplierController = require('../controllers/AveragePriceByS
 // נתיבים לשאילתות קיבוץ
 router.get('/products-grouped-by-supplier', groupByProductController.getProductsGroupedBySupplier);
 router.get('/products-grouped-by-category', groupByProductController.getProductsGroupedByCategory);
-router.get('/catalog/average-price-by-supplier', averagePriceBySupplierController.getAveragePriceBySupplier);
+router.get('/average-price-by-supplier', averagePriceBySupplierController.getAveragePriceBySupplier);
 
 
 // נתיבים אחרים

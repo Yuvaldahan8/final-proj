@@ -3,6 +3,8 @@ const router = express.Router();
 
 const userController = require("../controllers/userController");
 const productController = require("../controllers/productController");
+const userStatsController = require("../controllers/userStatsController");
+
 
 router.get("/", userController.renderLogin);
 router.get("/home", userController.renderHome);
@@ -15,6 +17,7 @@ router.post("/login", userController.login);
 
 router.get("/cart", productController.viewCart);
 router.post("/cart", productController.addToCart);
+router.get("/user-counts-by-role", userStatsController.getUserCountsByRole);
 
 
 module.exports = router;

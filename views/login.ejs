@@ -10,14 +10,16 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="login.css">
+
     </head>
     <body>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="card mt-5">
+                    <div class="LoginCard">
                         <div class="card-body">
-                            <h3 class="card-title text-center">Login</h3>
+                            <h3  class="card-title text-center">Login</h3>
                             <form action="/login" method="POST">
                                 <div class="form-group">
                                     <label for="email">Email address</label>
@@ -42,12 +44,13 @@
                                 <button
                                     type="submit"
                                     class="btn btn-primary btn-block"
+                                    class="loginButtom"
                                 >
                                     Login
                                 </button>
                             </form>
 
-                            <a href="/auth/facebook" class="btn btn-primary">Login with Facebook</a>
+                            <a href="/auth/facebook"  class="btn btn-primary facebook-button">Login with Facebook</a>
                             
                             <p class="text-center mt-3">
                                 Don't have an account?

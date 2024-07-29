@@ -1,4 +1,3 @@
-const Product = require('../models/product');
 
 exports.getProductsGroupedBySupplier = async (req, res) => {
     try {
@@ -6,7 +5,7 @@ exports.getProductsGroupedBySupplier = async (req, res) => {
             {
                 $group: {
                     _id: "$supplier",
-                    products: { $push: "$$ROOT" }
+                    count: { $sum: 1 }
                 }
             },
             {
@@ -14,10 +13,10 @@ exports.getProductsGroupedBySupplier = async (req, res) => {
                     from: "users",
                     localField: "_id",
                     foreignField: "_id",
-                    as: "supplier"
+                    as: "supplierDetails"
                 }
             },
-            { $unwind: "$supplier" }
+            { $unwind: "$supplierDetails" }
         ]);
         res.json(productsGroupedBySupplier);
     } catch (error) {
@@ -25,13 +24,15 @@ exports.getProductsGroupedBySupplier = async (req, res) => {
     }
 };
 
+const Product = require('../models/product');
+
 exports.getProductsGroupedByCategory = async (req, res) => {
     try {
         const productsGroupedByCategory = await Product.aggregate([
             {
                 $group: {
                     _id: "$category",
-                    products: { $push: "$$ROOT" }
+                    count: { $sum: 1 }
                 }
             },
             {
@@ -39,13 +40,14 @@ exports.getProductsGroupedByCategory = async (req, res) => {
                     from: "categories",
                     localField: "_id",
                     foreignField: "_id",
-                    as: "category"
+                    as: "categoryDetails"
                 }
             },
-            { $unwind: "$category" }
+            { $unwind: "$categoryDetails" }
         ]);
         res.json(productsGroupedByCategory);
     } catch (error) {
         res.status(500).send(error);
     }
 };
+

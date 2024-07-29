@@ -15,7 +15,7 @@ exports.renderCatalog = async (req, res) => {
             const categories = await Category.find();
             const suppliers = await User.find({ role: 'supplier' });
             
-            // הוספת קוד לסינון לפי קטגוריה, שם ומחיר ספציפי
+            // filter func
             let query = {}; 
             if (req.query.category) { 
                 query.category = req.query.category; 

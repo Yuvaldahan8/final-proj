@@ -31,6 +31,10 @@ body {
     font-family:  Calibri;
 
   }
+  .productInfo{
+    font-family: 'Calibri', sans-serif;
+    font-weight: 600;
+  }
   
   .product-container img {
     margin: 0 auto 30px auto;

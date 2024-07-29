@@ -45,9 +45,10 @@
 <div class="container product-container mt-4" class="background-home">
     <h1 id="productTitel"><%= product.name %></h1>
     <img  src="<%= product.image %>" alt="<%= product.name %>" width="200" height="200">
-    <p>Supplier: <%= product.supplier.name %></p>
-    <p>Price: $<%= product.price %></p>
-    <p>Description: $<%= product.description %></p>
+    <p class="productInfo">Supplier: <%= product.supplier.name %></p>
+    <p class="productInfo">Category: <%= product.category.name %></p>
+    <p class="productInfo">Price: $<%= product.price %></p>
+    <p class="productInfo">Description: <%= product.description %></p>
 
     <div class="add-to-cart-container">
         <input type="number" name="quantity" min="1" value="1" required>

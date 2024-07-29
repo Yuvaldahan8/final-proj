@@ -16,18 +16,18 @@ exports.renderCatalog = async (req, res) => {
             const suppliers = await User.find({ role: 'supplier' });
             
             // הוספת קוד לסינון לפי קטגוריה, שם ומחיר ספציפי
-            let query = {}; // הוספת שורה זו
-            if (req.query.category) { // הוספת שורה זו
-                query.category = req.query.category; // הוספת שורה זו
-            } // הוספת שורה זו
-            if (req.query.name) { // הוספת שורה זו
-                query.name = { $regex: req.query.name, $options: "i" }; // הוספת שורה זו
-            } // הוספת שורה זו
-            if (req.query.price) { // הוספת שורה זו
-                query.price = req.query.price; // הוספת שורה זו
-            } // הוספת שורה זו
+            let query = {}; 
+            if (req.query.category) { 
+                query.category = req.query.category; 
+            } 
+            if (req.query.name) {
+                query.name = { $regex: req.query.name, $options: "i" }; 
+            } 
+            if (req.query.price) { 
+                query.price = req.query.price; 
+            } 
 
-            const products = await Product.find(query).populate('category').populate('supplier'); // שינוי השורה הזו
+            const products = await Product.find(query).populate('category').populate('supplier'); 
 
             res.render("catalog/catalog", { 
                 user,  

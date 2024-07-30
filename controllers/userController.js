@@ -10,15 +10,13 @@ exports.renderLogin = (req, res) => {
 exports.renderHome = async (req, res) => {
     if (!req.session.user) {
         res.redirect("/login?message=User is not logged in"); 
-    }
-    else {
+    } else {
         const user = req.session.user;
         const products = await Product.find().populate('category').populate('supplier');
 
         if (user.role !== 'user') {
             res.redirect("/login?message=User is not logged in as user"); 
-        }
-        else {
+        } else {
             res.render("home", { 
                 user, 
                 products, 
@@ -40,8 +38,7 @@ exports.logout = (req, res) => {
             res.clearCookie('connect.sid');
             res.redirect("/login?message=Logged out successfully");
         });
-    }
-    else {
+    } else {
         res.redirect("/login?message=No active session"); 
     }
 };
@@ -92,3 +89,30 @@ exports.signup = async (req, res) => {
     res.redirect("/login?message=User created successfully");
 };
 
+// Render the edit user page
+exports.renderEditUser = (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/login?message=User is not logged in"); 
+    } else {
+        const user = req.session.user;
+        res.render("editUser", { user, error: '' });
+    }
+};
+
+// Handle the user info update
+exports.updateUser = async (req, res) => {
+    const { name } = req.body;
+    const user = req.session.user;
+
+    if (!user) {
+        return res.redirect("/login?message=User is not logged in");
+    }
+
+    try {
+        await User.findByIdAndUpdate(user._id, { name });
+        user.name = name; // Update session user
+        res.redirect("/home?message=User info updated successfully");
+    } catch (err) {
+        res.render("editUser", { user, error: "Error updating user info" });
+    }
+};

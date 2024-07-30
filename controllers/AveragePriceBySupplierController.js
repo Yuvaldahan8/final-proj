@@ -20,10 +20,16 @@ exports.getAveragePriceBySupplier = async (req, res) => {
             { $unwind: "$supplierDetails" }
         ]);
 
+    
+        if (!averagePriceBySupplier.length) {
+            return res.status(404).send("לא נמצאו נתונים");
+        }
+
         res.render('charts/averagePriceBySupplier', {
             averagePriceBySupplier
         });
     } catch (error) {
+        console.error("שגיאה ב-getAveragePriceBySupplier:", error);
         res.status(500).send(error);
     }
 };

@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 const groupByProductController = require('../controllers/groupByProductController');
-const averagePriceBySupplierController = require('../controllers/AveragePriceBySupplierController');
+const averagePriceBySupplierController = require('../controllers/averagePriceBySupplierController');
 const userStatsController = require('../controllers/userStatsController');
 
 

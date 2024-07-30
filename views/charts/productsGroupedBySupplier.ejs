@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Grouped By Supplier</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 75%;">
+        <canvas id="productsGroupedBySupplierChart"></canvas>
+    </div>
+    <script>
+        const ctx = document.getElementById('productsGroupedBySupplierChart').getContext('2d');
+        const data = {
+            labels: <%- JSON.stringify(productsGroupedBySupplier.map(item => item.supplierDetails.name)) %>,
+            datasets: [{
+                label: 'Products by Supplier',
+                data: <%- JSON.stringify(productsGroupedBySupplier.map(item => item.count)) %>,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+        new Chart(ctx, config);
+    </script>
+</body>
+</html>

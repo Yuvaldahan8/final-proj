@@ -2,10 +2,14 @@ const express = require("express");
 const methodOverride = require('method-override');
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const connectDB = require("./config");
 const passport = require('passport');
+const path = require('path');
 const User = require('./models/user');
 require('dotenv').config();
+
+// Connect to MongoDB
+const connectDB = require("./config");
+connectDB();
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
@@ -13,11 +17,9 @@ const adminRoutes = require("./routes/adminRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
 const facebookAuthRoutes = require("./routes/facebookAuth");
+const chartsRoutes = require("./routes/chartsRoutes"); 
 
 const app = express();
-
-// Connect to MongoDB
-connectDB();
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -53,7 +55,7 @@ passport.deserializeUser(async (id, done) => {
 
 // Set view engine
 app.set("view engine", "ejs");
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, 'views'));
 
 // Use the user routes
 app.use("/", userRoutes);
@@ -62,6 +64,7 @@ app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
 app.use(express.static('public'));
 app.use('/auth/facebook', facebookAuthRoutes);
+app.use('/charts', chartsRoutes);  // Add charts routes
 
 // Start the server
 app.listen(3000, () => {

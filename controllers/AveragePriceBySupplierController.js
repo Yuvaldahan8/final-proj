@@ -14,12 +14,15 @@ exports.getAveragePriceBySupplier = async (req, res) => {
                     from: "users",
                     localField: "_id",
                     foreignField: "_id",
-                    as: "supplier"
+                    as: "supplierDetails"
                 }
             },
-            { $unwind: "$supplier" }
+            { $unwind: "$supplierDetails" }
         ]);
-        res.json(averagePriceBySupplier);
+
+        res.render('charts/averagePriceBySupplier', {
+            averagePriceBySupplier
+        });
     } catch (error) {
         res.status(500).send(error);
     }

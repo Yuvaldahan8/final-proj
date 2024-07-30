@@ -166,23 +166,24 @@ exports.viewCart = async (req, res) => {
     res.render("cart", { order, user: req.session.user });
 }
 
-// פונקציות אחרות נשארות כפי שהן
+
 
 exports.clearCart = async (req, res) => {
-    const userId = req.session.user._id;
-    try {
-        const order = await Order.findOne({ user: userId });
-        if (order) {
-            order.products = [];
-            order.totalAmount = 0;
-            await order.save();
-        }
-        res.redirect("/cart");
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("An error occurred while clearing the cart");
+    if (!req.session.user) {
+        return res.status(401).json({ message: 'User is not logged in' });
     }
-};
+
+    const userId = req.session.user._id;
+    const order = await Order.findOne({ user: userId });
+
+    if (order) {
+        order.products = [];
+        order.totalAmount = 0;
+        await order.save();
+    }
+
+    res.json({ message: 'Cart cleared successfully' });
+}
 
 exports.listProducts = async (req, res) => {
     try {
@@ -203,3 +204,4 @@ exports.listProducts = async (req, res) => {
         });
     }
 }
+

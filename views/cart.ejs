@@ -43,9 +43,7 @@
                         <form action="/checkout" method="POST">
                             <button type="submit" class="btn btn-primary btn-lg mt-3">Proceed to Checkout</button>
                         </form>
-                        <form action="/cart/clear" method="POST">
-                            <button type="submit" class="btn btn-danger btn-lg mt-3">Clear Cart</button>
-                        </form>
+                        <button id="clearCartBtn" class="btn btn-danger btn-lg mt-3">Clear Cart</button>
                     </div>
                 <% } else { %>
                     <p>Your cart is empty.</p>
@@ -53,9 +51,30 @@
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="script.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#clearCartBtn').on('click', function(event) {
+                    event.preventDefault();  // מניעת התנהגות ברירת מחדל של הכפתור
+    
+                    $.ajax({
+                        url: '/cart/clear',
+                        method: 'POST',
+                        success: function(response) {
+                            // ניקוי המוצרים בעגלה ועדכון הסכום הכולל ל-0
+                            $('.product-grid').empty();
+                            $('#totalAmount').text('Total: $0');
+                        },
+                        error: function(error) {
+                            console.error('Error clearing cart:', error);
+                        }
+                    });
+                });
+            });
+        </script>
+
     </body>
 </html>

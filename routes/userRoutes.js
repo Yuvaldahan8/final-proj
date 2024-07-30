@@ -26,7 +26,7 @@ router.post("/login", userController.login);
 
 router.get("/cart", productController.viewCart);
 router.post("/cart", productController.addToCart);
-router.post("/cart/clear", productController.clearCart);
+router.post("/cart/clear", productController.clearCart); 
 router.get("/user-counts-by-role", userStatsController.getUserCountsByRole);
 
 

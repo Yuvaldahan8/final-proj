@@ -129,31 +129,34 @@ exports.deleteProduct = async(req, res) => {
     }
 }
 
-exports.addToCart = async(req, res) => {
-    const { productId, quantity }= req.body;
+exports.addToCart = async (req, res) => {
+    const { productId, quantity } = req.body;
     const userId = req.session.user._id;
 
-    const order = await Order.findOne({ user: userId });
+    let order = await Order.findOne({ user: userId });
     if (order) {
-        const exisitngProduct = order.products.find(item => item.product.toString() === productId);
-        if (exisitngProduct) {
-            exisitngProduct.quantity += +quantity
-        }
-        else {
+        const existingProduct = order.products.find(item => item.product.toString() === productId);
+        if (existingProduct) {
+            existingProduct.quantity += +quantity;
+        } else {
             order.products.push({ product: productId, quantity });
         }
-        order.totalAmount == (await Product.findById(productId)).price * quantity;
-        await order.save();
-    }
-    else {
-        const newOrder = new Order({
+    } else {
+        order = new Order({
             user: userId,
-            products: [{ product: productId, quantity }],
-            totalAmount: (await Product.findById(productId)).price * quantity
+            products: [{ product: productId, quantity }]
         });
-        await newOrder.save();
     }
 
+    // חישוב הסכום הכולל
+    let totalAmount = 0;
+    for (let item of order.products) {
+        const product = await Product.findById(item.product);
+        totalAmount += item.quantity * product.price;
+    }
+    order.totalAmount = totalAmount;
+
+    await order.save();
     res.redirect("/cart");
 }
 
@@ -162,6 +165,24 @@ exports.viewCart = async (req, res) => {
     const order = await Order.findOne({ user: userId }).populate("products.product");
     res.render("cart", { order, user: req.session.user });
 }
+
+// פונקציות אחרות נשארות כפי שהן
+
+exports.clearCart = async (req, res) => {
+    const userId = req.session.user._id;
+    try {
+        const order = await Order.findOne({ user: userId });
+        if (order) {
+            order.products = [];
+            order.totalAmount = 0;
+            await order.save();
+        }
+        res.redirect("/cart");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("An error occurred while clearing the cart");
+    }
+};
 
 exports.listProducts = async (req, res) => {
     try {

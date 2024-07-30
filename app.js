@@ -3,17 +3,16 @@ const methodOverride = require('method-override');
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const connectDB = require("./config");
-const passport = require('passport'); // ייבוא passport
-const User = require('./models/user'); // ייבוא מודל המשתמש
-require('dotenv').config(); // ייבוא משתני סביבה
+const passport = require('passport');
+const User = require('./models/user');
+require('dotenv').config();
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
-const facebookAuthRoutes = require("./routes/facebookAuth"); // ייבוא מסלול אימות פייסבוק
-
+const facebookAuthRoutes = require("./routes/facebookAuth");
 
 const app = express();
 
@@ -34,40 +33,35 @@ app.use(
     })
 );
 
-
-// הגדרות Passport
+// Passport configuration
 app.use(passport.initialize());
 app.use(passport.session());
 
-// פונקציות serializeUser ו- deserializeUser
+// serializeUser and deserializeUser functions
 passport.serializeUser((user, done) => {
     done(null, user.id);
-  });
-  
-  passport.deserializeUser(async (id, done) => {
+});
+
+passport.deserializeUser(async (id, done) => {
     try {
-      const user = await User.findById(id);
-      done(null, user);
+        const user = await User.findById(id);
+        done(null, user);
     } catch (err) {
-      done(err, null);
+        done(err, null);
     }
-  });
+});
 
 // Set view engine
 app.set("view engine", "ejs");
 app.set('views', __dirname + '/views');
 
-
-// Routes
+// Use the user routes
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
 app.use(express.static('public'));
 app.use('/auth/facebook', facebookAuthRoutes);
-
-
-
 
 // Start the server
 app.listen(3000, () => {

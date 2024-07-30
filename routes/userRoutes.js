@@ -6,6 +6,15 @@ const productController = require("../controllers/productController");
 const userStatsController = require("../controllers/userStatsController");
 
 
+
+// Render edit user page
+router.get("/edit-user", userController.renderEditUser);
+
+// Handle edit user form submission
+router.post("/edit-user", userController.updateUser);
+
+
+
 router.get("/", userController.renderLogin);
 router.get("/home", userController.renderHome);
 router.get("/login", userController.renderLogin);
@@ -21,3 +30,4 @@ router.get("/user-counts-by-role", userStatsController.getUserCountsByRole);
 
 
 module.exports = router;
+

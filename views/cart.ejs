@@ -59,6 +59,10 @@
             $(document).ready(function() {
                 $('#clearCartBtn').on('click', function(event) {
                     event.preventDefault();  // מניעת התנהגות ברירת מחדל של הכפתור
+
+                     if (!confirm('Are you sure you want to clear the cart?')) {
+                    return;
+                }
     
                     $.ajax({
                         url: '/cart/clear',

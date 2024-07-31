@@ -5,23 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            padding: 20px;
-        }
-        .profile-info, .orders {
-            margin-bottom: 20px;
-        }
-        .order-item {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 0;
-        }
-        .order-item:last-child {
-            border-bottom: none;
-        }
-    </style>
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
+        <a class="navbar-brand" href="#">Nursery</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse mr-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/catalog">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">profile</a>
+                </li>
+                
+            </ul>
+            <span class="navbar-text ml-auto">Welcome, <%= user.name %>!</span>
+            <a href="/logout" class="btn btn-danger ml-3">Logout</a>
+        </div>
+    </nav>
     <div class="container">
         <h1>User Profile</h1>
 

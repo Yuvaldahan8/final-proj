@@ -1,0 +1,14 @@
+
+body {
+    padding: 20px;
+}
+.profile-info, .orders {
+    margin-bottom: 20px;
+}
+.order-item {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+.order-item:last-child {
+    border-bottom: none;
+}

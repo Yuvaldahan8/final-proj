@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact</title>
- <link
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    rel="stylesheet"
-/>
-
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="contact.css">
+    
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
@@ -40,14 +37,72 @@
             <a href="/logout" class="btn btn-danger ml-3">Logout</a>
         </div>
     </nav>
- <div id="contactContainer">
-    <h1> Get in Touch with Us! 🌿 </h1>
-    <h2>Got questions about our plants or need some green-thumb advice? We’re here to help you grow! Whether you’re curious about care tips or need assistance with your order, just drop us a line.
+    <canvas id="flowersCanvas"></canvas>
+    <div id="contactContainer">
+        <h1>Get in Touch with Us! 🌿</h1>
+        <h2>Got questions about our plants or need some green-thumb advice? We’re here to help you grow! Whether you’re curious about care tips or need assistance with your order, just drop us a line.</h2>
+        <h3>📞 Call Us: 03-9763377</h3>
+        <h3>✉️ Email Us: NurseryIL@gmail.com</h3>
+        <h3>📍 Visit Us: Bikini Bottom (We promise not to bite, but our plants might!)</h3>
+    </div>
 
-    </h2>
-    <h3>📞 Call Us: 03-9763377</h3>
-     <h3> ✉️ Email Us:NurseryIL@gmail.com</h3>  
-    <h3>📍 Visit Us: Bikini Bottom (We promise not to bite, but our plants might!)</h3>
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('flowersCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let flowers = [];
+            const flowerEmoji = '🌸'; // Flower emoji to use
+            
+            class Flower {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.size = Math.random() * 30 + 10;
+                    this.speed = Math.random() * 2 + 1;
+                }
+
+                update() {
+                    this.y += this.speed;
+                    if (this.y > canvas.height) {
+                        this.y = -this.size;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+
+                draw() {
+                    ctx.font = `${this.size}px Arial`;
+                    ctx.fillText(flowerEmoji, this.x, this.y);
+                }
+            }
+
+            function createFlowers() {
+                for (let i = 0; i < 20; i++) {
+                    flowers.push(new Flower(Math.random() * canvas.width, Math.random() * canvas.height));
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                flowers.forEach(flower => {
+                    flower.update();
+                    flower.draw();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            createFlowers();
+            animate();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        });
+    </script>
 </body>
 </html>

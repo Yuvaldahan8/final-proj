@@ -22,6 +22,7 @@ const catalogRoutes = require("./routes/catalogRoutes");
 const facebookAuthRoutes = require("./routes/facebookAuth");
 const chartsRoutes = require("./routes/chartsRoutes"); 
 
+
 const app = express();
 
 // Middleware
@@ -70,7 +71,7 @@ app.use('/auth/facebook', facebookAuthRoutes);
 app.use('/charts', chartsRoutes);  // Add charts routes
 app.use('/products', productRoutes); // חיבור נתיבי המוצרים
 app.use('/cart', cartRoutes); // חיבור נתיבי העגלה
-
+app.use("/profile", userRoutes);
 // Start the server
 app.listen(3000, () => {
     console.log("Server is running on port 3000");

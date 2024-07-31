@@ -129,37 +129,63 @@ exports.deleteProduct = async(req, res) => {
     }
 }
 
+// exports.addToCart = async (req, res) => {
+//     const { productId, quantity } = req.body;
+//     const userId = req.session.user._id;
+// console.log('p.add');
+//     let order = await Order.findOne({ user: userId });
+//     if (order) {
+//         const existingProduct = order.products.find(item => item.product.toString() === productId);
+//         if (existingProduct) {
+//             existingProduct.quantity += +quantity;
+//         } else {
+//             order.products.push({ product: productId, quantity });
+//         }
+//     } else {
+//         order = new Order({
+//             user: userId,
+//             products: [{ product: productId, quantity }]
+//         });
+//     }
+
+//     // חישוב הסכום הכולל
+//     let totalAmount = 0;
+//     for (let item of order.products) {
+//         const product = await Product.findById(item.product);
+//         totalAmount += item.quantity * product.price;
+//     }
+//     order.totalAmount = totalAmount;
+
+//     await order.save();
+//     res.redirect("/cart");
+// }
 exports.addToCart = async (req, res) => {
     const { productId, quantity } = req.body;
     const userId = req.session.user._id;
 
-    let order = await Order.findOne({ user: userId });
-    if (order) {
-        const existingProduct = order.products.find(item => item.product.toString() === productId);
-        if (existingProduct) {
-            existingProduct.quantity += +quantity;
-        } else {
-            order.products.push({ product: productId, quantity });
-        }
-    } else {
-        order = new Order({
+    try {
+        // Create a new order with the provided product and quantity
+        const order = new Order({
             user: userId,
             products: [{ product: productId, quantity }]
         });
+
+        // Calculate the total amount for the new order
+        let totalAmount = 0;
+        for (let item of order.products) {
+            const product = await Product.findById(item.product);
+            totalAmount += item.quantity * product.price;
+        }
+        order.totalAmount = totalAmount;
+
+        // Save the new order
+        await order.save();
+        res.redirect("/cart");
+    } catch (error) {
+        console.error('Error adding product to cart:', error);
+        res.status(500).json({ error: 'An error occurred while adding the product to the cart' });
     }
-
-    // חישוב הסכום הכולל
-    let totalAmount = 0;
-    for (let item of order.products) {
-        const product = await Product.findById(item.product);
-        totalAmount += item.quantity * product.price;
-    }
-    order.totalAmount = totalAmount;
-
-    await order.save();
-    res.redirect("/cart");
-}
-
+};
 exports.viewCart = async (req, res) => {
     const userId = req.session.user._id;
     const order = await Order.findOne({ user: userId }).populate("products.product");

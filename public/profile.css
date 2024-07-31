@@ -1,26 +1,10 @@
 
-body {
-    padding: 20px;
-    background-color: rgb(173, 207, 168);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        font-family: 'Calibri';
-}
 .profile-info, .orders {
     margin-bottom: 20px;
 }
-.order-item {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
-}
-.order-item:last-child {
-    border-bottom: none;
-}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
     padding-top: 56px;
     margin: 0;
     background-image: linear-gradient(rgba(34, 34, 34, 0.6), rgba(34, 34, 34, 0.6)), url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
@@ -43,13 +27,21 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .profile-info{
+    font-size: larger;
 }
 .aboutCard {
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color:  rgba(180, 210, 186, 0.9);
     margin: 20px auto;
     max-width: 800px;
     text-align: center;
+}
+.card{
+    background-color:  rgba(132, 156, 137, 0.9);
+    
+}
+.btn:not(:disabled):not(.disabled){
+    color: black;
 }

@@ -39,8 +39,8 @@ exports.addToCart = async (req, res) => {
     } catch (error) {
         console.error('Error adding product to cart:', error);
         req.flash('error_msg', 'Failed to add product to cart. Please try again.');
-        res.redirect('/catalog')
-        // res.status(500).json({ error: 'An error occurred while adding the product to the cart' });
+        res.redirect('/catalog');
+
     }
 };
 

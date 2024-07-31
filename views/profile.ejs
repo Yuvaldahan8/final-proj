@@ -32,51 +32,65 @@
                     <a class="nav-link" href="/cart">Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile">profile</a>
+                    <a class="nav-link" href="/profile">Profile</a>
                 </li>
-                
             </ul>
             <span class="navbar-text ml-auto">Welcome, <%= user.name %>!</span>
             <a href="/logout" class="btn btn-danger ml-3">Logout</a>
         </div>
     </nav>
     <div class="aboutCard ">
-        <div class="container">
-            <h1>My Profile</h1>
+        <div class="container mt-4">
+            <h1>👩🏻‍🌾 My Profile 👩🏻‍🌾</h1>
 
             <div class="profile-info">
-                <h2>Personal Information</h2>
                 <p><strong>Name:</strong> <%= user.name %></p>
                 <p><strong>Email:</strong> <%= user.email %></p>
             </div>
 
-            <div class="orders">
+            <div class="orders mt-4">
                 <h2>Order History</h2>
                 <% if (orders && orders.length > 0) { %>
-                    <% orders.forEach(order => { %>
-                        <div class="order-item">
-                            <h3>Order ID: <%= order._id %></h3>
-                            <p><strong>Date:</strong> <%= new Date(order.createdAt).toLocaleDateString() %></p>
-                            <p><strong>Total Amount:</strong> $<%= order.totalAmount %></p>
-                            <h4>Products:</h4>
-                            <% if (order.products && order.products.length > 0) { %>
-                                <ul>
-                                    <% order.products.forEach(item => { %>
-                                        <li>
-                                            <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: $<%= item.product.price %> each
-                                        </li>
-                                    <% }) %>
-                                </ul>
-                            <% } else { %>
-                                <p>No products in this order.</p>
-                            <% } %>
-                        </div>
-                    <% }) %>
+                    <div class="accordion" id="orderAccordion">
+                        <% orders.forEach((order, index) => { %>
+                            <div class="card">
+                                <div class="card-header" id="heading<%= index %>">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                                            Order ID: <%= order._id %> - Date: <%= new Date(order.createdAt).toLocaleDateString() %> - Total Amount: $<%= order.totalAmount %>
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#orderAccordion">
+                                    <div class="card-body">
+                                        <h4>Products:</h4>
+                                        <% if (order.products && order.products.length > 0) { %>
+                                            <ul>
+                                                <% order.products.forEach(item => { %>
+                                                    <li>
+                                                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: $<%= item.product.price %> each
+                                                    </li>
+                                                <% }) %>
+                                            </ul>
+                                        <% } else { %>
+                                            <p>No products in this order.</p>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
                 <% } else { %>
                     <p>No orders found.</p>
                 <% } %>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+

@@ -23,6 +23,8 @@ h1 {
 }
 .form-group {
     margin-bottom: 15px;
+    align-items: center;
+
 }
 .form-group label {
     display: block;
@@ -34,6 +36,7 @@ h1 {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    
 }
 .form-group input[type="submit"] {
     background-color: #007bff;

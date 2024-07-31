@@ -1,16 +1,28 @@
-body{
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-image: url('https://img.freepik.com/free-vector/botanical-frame-beige-background_53876-116816.jpg?t=st=1722257434~exp=1722261034~hmac=94fb08904f6817367613df4d4ad7153693892eef9759d441d36a987791a7a376&w=1380');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
 }
-.LoginCard{
-    margin-top: 45%;
+
+.LoginCard {
     font-size: medium;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    width: 100%; 
+    max-width: 900px; 
+    min-width: 400px; 
+    margin-right: 100%; 
 
 }
+
 .facebook-button {
     margin-top: 20px;
     background-color: #3b5998; 

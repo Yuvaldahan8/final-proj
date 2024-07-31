@@ -25,31 +25,37 @@
             </div>
         </nav>
 
-        <div class="container mt-5">
-            <div class="checkout-container">
-                <h2 class="mb-4">Your Order</h2>
-                <% if (order && order.products && order.products.length > 0) { %>
-                    <div class="product-grid">
-                        <% order.products.forEach(item => { %>
-                            <div class="product-item">
-                                <h5 class="productNameCart"><%= item.product.name %></h5>
-                                <p>Quantity: <%= item.quantity %></p>
-                                <p><strong>Price: $<%= item.product.price * item.quantity %></strong></p>
+        
+    <div class="container mt-5">
+        <div class="checkout-container">
+            <h2 class="mb-4">Your Order</h2>
+            <% if (order && order.products && order.products.length > 0) { %>
+                <div class="product-grid">
+                    <% order.products.forEach((item, index) => { %>
+                        <div class="product-item" data-product-id="<%= item.product._id %>">
+                            <h5 class="productNameCart"><%= item.product.name %></h5>
+                            <div class="quantity-control">
+                                <button class="btn btn-sm btn-secondary decrease-quantity">-</button>
+                                <span class="quantity"><%= item.quantity %></span>
+                                <button class="btn btn-sm btn-secondary increase-quantity">+</button>
                             </div>
-                        <% }); %>
-                    </div>
-                    <div class="order-summary mt-4 text-center">
-                        <h3>Total: $<%= order.totalAmount %></h3>
-                        <form action="/checkout" method="POST">
-                            <button type="submit" class="btn btn-primary btn-lg mt-3">Proceed to Checkout</button>
-                        </form>
-                        <button id="clearCartBtn" class="btn btn-danger btn-lg mt-3">Clear Cart</button>
-                    </div>
-                <% } else { %>
-                    <p>Your cart is empty.</p>
-                <% } %>
-            </div>
+                            <p><strong>Price: $<span class="item-price"><%= item.product.price * item.quantity %></span></strong></p>
+                            <button class="btn btn-danger btn-sm remove-item">Remove</button>
+                        </div>
+                    <% }); %>
+                </div>
+                <div class="order-summary mt-4 text-center">
+                    <h3>Total: $<span id="totalAmount"><%= order.totalAmount %></span></h3>
+                    <form action="/checkout" method="POST">
+                        <button type="submit" class="btn btn-primary btn-lg mt-3">Proceed to Checkout</button>
+                    </form>
+                    <button id="clearCartBtn" class="btn btn-danger btn-lg mt-3">Clear Cart</button>
+                </div>
+            <% } else { %>
+                <p>Your cart is empty.</p>
+            <% } %>
         </div>
+    </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
@@ -57,28 +63,72 @@
         <script src="script.js"></script>
         <script>
             $(document).ready(function() {
-                $('#clearCartBtn').on('click', function(event) {
-                    event.preventDefault();  // מניעת התנהגות ברירת מחדל של הכפתור
-
-                     if (!confirm('Are you sure you want to clear the cart?')) {
-                    return;
+                // פונקציה לעדכון הסכום הכולל
+                function updateTotalAmount() {
+                    let total = 0;
+                    $('.item-price').each(function() {
+                        total += parseFloat($(this).text());
+                    });
+                    $('#totalAmount').text(total.toFixed(2));
                 }
     
+                // הוספת כמות
+                $('.increase-quantity').on('click', function() {
+                    let quantitySpan = $(this).siblings('.quantity');
+                    let quantity = parseInt(quantitySpan.text()) + 1;
+                    quantitySpan.text(quantity);
+                    updateItemPrice($(this).closest('.product-item'), quantity);
+                });
+    
+                // הפחתת כמות
+                $('.decrease-quantity').on('click', function() {
+                    let quantitySpan = $(this).siblings('.quantity');
+                    let quantity = Math.max(1, parseInt(quantitySpan.text()) - 1);
+                    quantitySpan.text(quantity);
+                    updateItemPrice($(this).closest('.product-item'), quantity);
+                });
+    
+                // עדכון מחיר פריט
+                function updateItemPrice(productItem, quantity) {
+                    let pricePerItem = parseFloat(productItem.find('.item-price').attr('data-price-per-item'));
+                    let newPrice = pricePerItem * quantity;
+                    productItem.find('.item-price').text(newPrice.toFixed(2));
+                    updateTotalAmount();
+                }
+    
+                // הסרת פריט
+                $('.remove-item').on('click', function() {
+                    $(this).closest('.product-item').remove();
+                    updateTotalAmount();
+                });
+    
+                // ניקוי העגלה
+                $('#clearCartBtn').on('click', function(event) {
+                    event.preventDefault();
+                    if (!confirm('Are you sure you want to clear the cart?')) {
+                        return;
+                    }
                     $.ajax({
                         url: '/cart/clear',
                         method: 'POST',
                         success: function(response) {
-                            // ניקוי המוצרים בעגלה ועדכון הסכום הכולל ל-0
                             $('.product-grid').empty();
-                            $('#totalAmount').text('Total: $0');
+                            $('#totalAmount').text('0.00');
                         },
                         error: function(error) {
                             console.error('Error clearing cart:', error);
                         }
                     });
                 });
+    
+                // אתחול מחיר ליחידה
+                $('.product-item').each(function() {
+                    let price = parseFloat($(this).find('.item-price').text());
+                    let quantity = parseInt($(this).find('.quantity').text());
+                    let pricePerItem = price / quantity;
+                    $(this).find('.item-price').attr('data-price-per-item', pricePerItem.toFixed(2));
+                });
             });
         </script>
-
     </body>
-</html>
+    </html>

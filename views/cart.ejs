@@ -61,80 +61,8 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="script.js"></script>
-        <script>
-            $(document).ready(function() {
-                // פונקציה לעדכון הסכום הכולל
-                function updateTotalAmount() {
-                    let total = 0;
-                    $('.item-price').each(function() {
-                        total += parseFloat($(this).text());
-                    });
-                    $('#totalAmount').text(total.toFixed(2));
-                }
+        
     
-                // הוספת כמות
-                $('.increase-quantity').on('click', function() {
-                    let quantitySpan = $(this).siblings('.quantity');
-                    let quantity = parseInt(quantitySpan.text()) + 1;
-                    quantitySpan.text(quantity);
-                    updateItemPrice($(this).closest('.product-item'), quantity);
-                    // קריאת AJAX לעדכון כמות
-                      updateCartItem(productItem.data('product-id'), quantity);
-                });
-    
-                // הפחתת כמות
-                $('.decrease-quantity').on('click', function() {
-                    let quantitySpan = $(this).siblings('.quantity');
-                    let quantity = Math.max(1, parseInt(quantitySpan.text()) - 1);
-                    quantitySpan.text(quantity);
-                    updateItemPrice($(this).closest('.product-item'), quantity);
-                      // קריאת AJAX לעדכון כמות
-                      updateCartItem(productItem.data('product-id'), quantity);
-                });
-    
-                // עדכון מחיר פריט
-                function updateItemPrice(productItem, quantity) {
-                    let pricePerItem = parseFloat(productItem.find('.item-price').attr('data-price-per-item'));
-                    let newPrice = pricePerItem * quantity;
-                    productItem.find('.item-price').text(newPrice.toFixed(2));
-                    updateTotalAmount();
-                }
-    
-                // הסרת פריט
-                $('.remove-item').on('click', function() {
-                    $(this).closest('.product-item').remove();
-                    updateTotalAmount();
-                    removeCartItem(productId);
-                });
-    
-                // ניקוי העגלה
-                $('#clearCartBtn').on('click', function(event) {
-                    event.preventDefault();
-                    if (!confirm('Are you sure you want to clear the cart?')) {
-                        return;
-                    }
-                    $.ajax({
-                        url: '/cart/clear',
-                        method: 'POST',
-                        success: function(response) {
-                            $('.product-grid').empty();
-                            $('#totalAmount').text('0.00');
-                        },
-                        error: function(error) {
-                            console.error('Error clearing cart:', error);
-                        }
-                    });
-                });
-    
-                // אתחול מחיר ליחידה
-                $('.product-item').each(function() {
-                    let price = parseFloat($(this).find('.item-price').text());
-                    let quantity = parseInt($(this).find('.quantity').text());
-                    let pricePerItem = price / quantity;
-                    $(this).find('.item-price').attr('data-price-per-item', pricePerItem.toFixed(2));
-                });
-            });
-        </script>
         
     </body>
     </html>

@@ -12,41 +12,65 @@ async function calculateTotalAmount(order) {
     return totalAmount;
 }
 
+// exports.addToCart = async (req, res) => {
+//     const { productId, quantity } = req.body;
+//     const userId = req.session.user._id;
+
+//     try {
+//         let order = await Order.findOne({ user: userId });
+//         if (order) {
+//             const existingProduct = order.products.find(item => item.product.toString() === productId);
+//             if (existingProduct) {
+//                 existingProduct.quantity += +quantity;
+//             } else {
+//                 order.products.push({ product: productId, quantity });
+//             }
+//         } else {
+//             order = new Order({
+//                 user: userId,
+//                 products: [{ product: productId, quantity }]
+//             });
+//         }
+
+//         order.totalAmount = await calculateTotalAmount(order);
+//         await order.save();
+//         res.json({ success: true, message: 'Product added to cart' });
+//     } catch (error) {
+//         console.error('Error adding product to cart:', error);
+//         res.status(500).json({ error: 'An error occurred while adding the product to the cart' });
+//     }
+// };
 exports.addToCart = async (req, res) => {
+    console.log('add');
     const { productId, quantity } = req.body;
     const userId = req.session.user._id;
 
     try {
-        let order = await Order.findOne({ user: userId });
-        if (order) {
-            const existingProduct = order.products.find(item => item.product.toString() === productId);
-            if (existingProduct) {
-                existingProduct.quantity += +quantity;
-            } else {
-                order.products.push({ product: productId, quantity });
-            }
-        } else {
-            order = new Order({
-                user: userId,
-                products: [{ product: productId, quantity }]
-            });
-        }
+        // Create a new order with the provided product and quantity
+        const order = new Order({
+            user: userId,
+            products: [{ product: productId, quantity }]
+        });
 
+        // Calculate the total amount for the new order
         order.totalAmount = await calculateTotalAmount(order);
+        
+        // Save the new order
         await order.save();
-        req.flash('success_msg', 'Product added to cart successfully!');
-        res.redirect('/catalog');
+
+        
+        res.json({ success: true, message: 'Order created and product added to cart' });
+
     } catch (error) {
         console.error('Error adding product to cart:', error);
         req.flash('error_msg', 'Failed to add product to cart. Please try again.');
         res.redirect('/catalog');
     }
 };
-
 exports.updateCartItem = async (req, res) => {
     const { productId, quantity } = req.body;
     const userId = req.session.user._id;
-
+    console.log('update')
     try {
         let order = await Order.findOne({ user: userId });
         if (order) {
@@ -68,7 +92,7 @@ exports.updateCartItem = async (req, res) => {
 exports.removeCartItem = async (req, res) => {
     const { productId } = req.body;
     const userId = req.session.user._id;
-
+console.log('remove');
     try {
         let order = await Order.findOne({ user: userId });
         if (order) {

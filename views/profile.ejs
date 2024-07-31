@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .profile-info, .orders {
+            margin-bottom: 20px;
+        }
+        .order-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Profile</h1>
+
+        <div class="profile-info">
+            <h2>Personal Information</h2>
+            <p><strong>Name:</strong> <%= user.name %></p>
+            <p><strong>Email:</strong> <%= user.email %></p>
+        </div>
+
+        <div class="orders">
+            <h2>Order History</h2>
+            <% if (orders && orders.length > 0) { %>
+                <% orders.forEach(order => { %>
+                    <div class="order-item">
+                        <h3>Order ID: <%= order._id %></h3>
+                        <p><strong>Date:</strong> <%= new Date(order.createdAt).toLocaleDateString() %></p>
+                        <p><strong>Total Amount:</strong> $<%= order.totalAmount %></p>
+                        <h4>Products:</h4>
+                        <% if (order.products && order.products.length > 0) { %>
+                            <ul>
+                                <% order.products.forEach(item => { %>
+                                    <li>
+                                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: $<%= item.product.price %> each
+                                    </li>
+                                <% }) %>
+                            </ul>
+                        <% } else { %>
+                            <p>No products in this order.</p>
+                        <% } %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No orders found.</p>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

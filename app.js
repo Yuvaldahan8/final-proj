@@ -5,6 +5,9 @@ const session = require("express-session");
 const passport = require('passport');
 const path = require('path');
 const User = require('./models/user');
+const cartRoutes = require('./routes/cartRoutes'); // הוספת מסלולי העגלה
+const productRoutes = require('./routes/productRoutes');
+
 require('dotenv').config();
 
 // Connect to MongoDB
@@ -65,6 +68,8 @@ app.use("/catalog", catalogRoutes);
 app.use(express.static('public'));
 app.use('/auth/facebook', facebookAuthRoutes);
 app.use('/charts', chartsRoutes);  // Add charts routes
+app.use('/products', productRoutes); // חיבור נתיבי המוצרים
+app.use('/cart', cartRoutes); // חיבור נתיבי העגלה
 
 // Start the server
 app.listen(3000, () => {

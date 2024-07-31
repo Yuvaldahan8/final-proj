@@ -204,4 +204,3 @@ exports.listProducts = async (req, res) => {
         });
     }
 }
-

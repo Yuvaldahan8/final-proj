@@ -78,6 +78,8 @@
                     let quantity = parseInt(quantitySpan.text()) + 1;
                     quantitySpan.text(quantity);
                     updateItemPrice($(this).closest('.product-item'), quantity);
+                    // קריאת AJAX לעדכון כמות
+                      updateCartItem(productItem.data('product-id'), quantity);
                 });
     
                 // הפחתת כמות
@@ -86,6 +88,8 @@
                     let quantity = Math.max(1, parseInt(quantitySpan.text()) - 1);
                     quantitySpan.text(quantity);
                     updateItemPrice($(this).closest('.product-item'), quantity);
+                      // קריאת AJAX לעדכון כמות
+                      updateCartItem(productItem.data('product-id'), quantity);
                 });
     
                 // עדכון מחיר פריט
@@ -100,6 +104,7 @@
                 $('.remove-item').on('click', function() {
                     $(this).closest('.product-item').remove();
                     updateTotalAmount();
+                    removeCartItem(productId);
                 });
     
                 // ניקוי העגלה
@@ -130,5 +135,6 @@
                 });
             });
         </script>
+        
     </body>
     </html>

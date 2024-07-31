@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catalog</title>
     <link
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-            rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        rel="stylesheet"
     />
     <link rel="stylesheet" href="../catalog.css">
     <link rel="stylesheet" href="../style.css">
-
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
@@ -42,31 +41,41 @@
     </div>
 </nav>
 
-<div class="container mt-4" class="background-home">
+<% if (success_msg) { %>
+    <div class="alert alert-success flash-message" role="alert">
+        <%= success_msg %>
+    </div>
+<% } %>
+<% if (error_msg) { %>
+    <div class="alert alert-danger flash-message" role="alert">
+        <%= error_msg %>
+    </div>
+<% } %>
+
+<div class="container mt-4 background-home">
     <h1 id="productTitel">Products</h1>
 
-<form class="SearchCatalog" class="mb-4" method="GET" action="/catalog">
-    <div class="form-row">
-        <div class="col">
-            <input type="text" name="name" class="form-control" placeholder="Product Name">
+    <form class="SearchCatalog mb-4" method="GET" action="/catalog">
+        <div class="form-row">
+            <div class="col">
+                <input type="text" name="name" class="form-control" placeholder="Product Name">
+            </div>
+            <div class="col">
+                <select name="category" class="form-control">
+                    <option value="">All Categories</option>
+                    <% categories.forEach(category => { %>
+                        <option value="<%= category._id %>"><%= category.name %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="col">
+                <input type="number" name="price" class="form-control" placeholder="Price">
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
         </div>
-        <div class="col">
-            <select name="category" class="form-control">
-                <option value="">All Categories</option>
-                <% categories.forEach(category => { %>
-                    <option value="<%= category._id %>"><%= category.name %></option>
-                <% }); %>
-            </select>
-        </div>
-        <div class="col">
-            <input type="number" name="price" class="form-control" placeholder="Price">
-        </div>
-        <div class="col">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    </div>
-</form>
-
+    </form>
 
     <div class="row">
         <% products.forEach(product => { %>
@@ -78,7 +87,7 @@
                     <p class="card-text">Supplier: <%= product.supplier.name %></p>
                     <p class="card-text">Price: $<%= product.price %></p>
                     <button class="btn btn-secondary" onclick="window.location.href=`/catalog/<%= product._id %>`">View</button>
-                    <form action="/cart" method="POST">
+                    <form action="/cart/add" method="POST">
                         <input type="hidden" name="productId" value="<%= product._id %>">
                         <div class="add-to-cart-container">
                             <input type="number" name="quantity" min="1" value="1" required>
@@ -96,5 +105,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="../script.js"></script>
+<script>
+    // הסרת הודעות פלאש לאחר 3 שניות
+    setTimeout(() => {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(message => {
+            message.style.transition = 'opacity 0.5s ease-out';
+            message.style.opacity = '0';
+            setTimeout(() => message.remove(), 500);
+        });
+    }, 3000);
+</script>
 </body>
 </html>

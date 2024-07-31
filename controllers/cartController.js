@@ -34,10 +34,12 @@ exports.addToCart = async (req, res) => {
 
         order.totalAmount = await calculateTotalAmount(order);
         await order.save();
-        res.redirect('/catalog'); // Redirecting to catalog after adding to cart
+        req.flash('success_msg', 'Product added to cart successfully!');
+        res.redirect('/catalog');
     } catch (error) {
         console.error('Error adding product to cart:', error);
-        res.status(500).json({ error: 'An error occurred while adding the product to the cart' });
+        req.flash('error_msg', 'Failed to add product to cart. Please try again.');
+        res.redirect('/catalog');
     }
 };
 

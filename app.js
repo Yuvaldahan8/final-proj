@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require('passport');
 const path = require('path');
+const flash = require('connect-flash'); // הוספת connect-flash
 const User = require('./models/user');
 const cartRoutes = require('./routes/cartRoutes'); // הוספת מסלולי העגלה
 const productRoutes = require('./routes/productRoutes');
@@ -38,6 +39,8 @@ app.use(
     })
 );
 
+app.use(flash());
+
 // Passport configuration
 app.use(passport.initialize());
 app.use(passport.session());
@@ -59,6 +62,13 @@ passport.deserializeUser(async (id, done) => {
 // Set view engine
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'));
+
+// Middleware to make flash messages available in all templates
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    next();
+});
 
 // Use the user routes
 app.use("/", userRoutes);

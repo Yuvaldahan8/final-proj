@@ -44,6 +44,7 @@ exports.renderProducts = async(req, res) => {
 
 exports.addProduct = async(req, res) => {
     try {
+
         const { name, price, category, description, image, supplier } = req.body;
         if (!name || !price || !category || !image || !supplier) {
             const categories = await Category.find();
@@ -76,6 +77,7 @@ exports.addProduct = async(req, res) => {
 }
 
 exports.editProduct = async(req, res) => {
+
     try {
         const { id } = req.params;
         const { name, price, category, description, image, supplier } = req.body;
@@ -130,9 +132,10 @@ exports.deleteProduct = async(req, res) => {
 }
 
 // exports.addToCart = async (req, res) => {
+
 //     const { productId, quantity } = req.body;
 //     const userId = req.session.user._id;
-// console.log('p.add');
+
 //     let order = await Order.findOne({ user: userId });
 //     if (order) {
 //         const existingProduct = order.products.find(item => item.product.toString() === productId);
@@ -187,6 +190,7 @@ exports.addToCart = async (req, res) => {
     }
 };
 exports.viewCart = async (req, res) => {
+
     const userId = req.session.user._id;
     const order = await Order.findOne({ user: userId }).populate("products.product");
     res.render("cart", { order, user: req.session.user });

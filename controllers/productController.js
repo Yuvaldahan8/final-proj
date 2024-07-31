@@ -2,6 +2,8 @@ const Category = require("../models/category");
 const Product = require("../models/product");
 const Order = require("../models/order");
 const User = require("../models/user");
+const paypalClient = require('../models/paypalClient');
+const paypal = require('@paypal/checkout-server-sdk');
 
 exports.renderProducts = async(req, res) => {
     try {
@@ -204,4 +206,124 @@ exports.listProducts = async (req, res) => {
         });
     }
 }
+exports.addToPayPalCart = async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ message: 'User is not logged in' });
+    }
+
+    const { productId, quantity } = req.body;
+    const userId = req.session.user._id;
+
+    let order = await Order.findOne({ user: userId });
+    if (order) {
+        const existingProduct = order.products.find(item => item.product.toString() === productId);
+        if (existingProduct) {
+            existingProduct.quantity += +quantity;
+        } else {
+            order.products.push({ product: productId, quantity });
+        }
+    } else {
+        order = new Order({
+            user: userId,
+            products: [{ product: productId, quantity }]
+        });
+    }
+
+    // חישוב הסכום הכולל
+    let totalAmount = 0;
+    for (let item of order.products) {
+        const product = await Product.findById(item.product);
+        totalAmount += item.quantity * product.price;
+    }
+    order.totalAmount = totalAmount;
+
+    await order.save();
+    res.json({ message: 'Product added to cart successfully' });
+}
+
+exports.viewPayPalCart = async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login?message=User is not logged in');
+    }
+
+    const userId = req.session.user._id;
+    const order = await Order.findOne({ user: userId }).populate("products.product");
+    res.render("cart", { order, user: req.session.user });
+}
+
+exports.clearPayPalCart = async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ message: 'User is not logged in' });
+    }
+
+    const userId = req.session.user._id;
+    const order = await Order.findOne({ user: userId });
+
+    if (order) {
+        order.products = [];
+        order.totalAmount = 0;
+        await order.save();
+    }
+
+    res.json({ message: 'Cart cleared successfully' });
+}
+
+exports.checkoutPaypal = async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login?message=User is not logged in');
+    }
+
+    const userId = req.session.user._id;
+    let order;
+    try {
+        order = await Order.findOne({ user: userId }).populate("products.product");
+        if (!order || order.products.length === 0) {
+            return res.redirect('/cart?message=Cart is empty');
+        }
+    } catch (err) {
+        console.error('Error fetching order:', err);
+        return res.status(500).json({ error: 'Error fetching order' });
+    }
+
+    // יצירת הזמנה ב-PayPal
+    const request = new paypal.orders.OrdersCreateRequest();
+    request.prefer("return=representation");
+    request.requestBody({
+        intent: 'CAPTURE',
+        purchase_units: [{
+            amount: {
+                currency_code: 'USD',
+                value: order.totalAmount.toFixed(2),
+                breakdown: {
+                    item_total: {
+                        currency_code: 'USD',
+                        value: order.totalAmount.toFixed(2)
+                    }
+                }
+            },
+            items: order.products.map(item => ({
+                name: item.product.name,
+                unit_amount: {
+                    currency_code: 'USD',
+                    value: item.product.price.toFixed(2)
+                },
+                quantity: item.quantity
+            }))
+        }],
+        application_context: {
+            return_url: `${req.headers.origin}/checkoutSuccess`,
+            cancel_url: `${req.headers.origin}/cheackoutCancel`
+        }
+    });
+
+    try {
+        const client = paypalClient.client(); // יוצרים אינסטנס של הלקוח
+        const orderResponse = await client.execute(request); // משתמשים באינסטנס של הלקוח לביצוע הבקשה
+        console.log('PayPal order response:', orderResponse);
+        res.json({ id: orderResponse.result.id });
+    } catch (err) {
+        console.error('Error creating PayPal order:', err);
+        res.status(500).json({ error: 'Something went wrong with creating PayPal order' });
+    }
+};
 

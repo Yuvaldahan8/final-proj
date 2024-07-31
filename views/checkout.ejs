@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="checkout-body">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Shop</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+            </ul>
+            <span class="navbar-text">Welcome, <%= user.name %>!</span>
+            <a href="/logout" class="btn btn-danger ml-3">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Checkout</h2>
+        <div class="order-summary">
+            <h3>Total: $<%= order.totalAmount %></h3>
+            <ul class="list-group mb-4">
+                <% order.products.forEach(item => { %>
+                    <li class="list-group-item">
+                        <strong><%= item.product.name %></strong> - Quantity: <%= item.quantity %> - Price: $<%= item.product.price * item.quantity %>
+                    </li>
+                <% }); %>
+            </ul>
+            <div id="paypal-button-container" class="btn btn-primary btn-lg">Confirm and Pay</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=<%= process.env.PAYPAL_CLIENT_ID %>&currency=USD"></script>
+    <script>
+        $(document).ready(function() {
+            // יצירת כפתור PayPal
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return fetch('/checkout', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            orderID: '<%= order._id %>'
+                        })
+                    }).then(function(res) {
+                        return res.json();
+                    }).then(function(details) {
+                        return details.id; // מחזיר את ה-ID של ההזמנה
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(det

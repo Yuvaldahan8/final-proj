@@ -7,8 +7,6 @@ body {
         background-repeat: no-repeat;
         background-attachment: fixed;
         font-family: 'Calibri';
-    
-    
 }
 .profile-info, .orders {
     margin-bottom: 20px;
@@ -43,4 +41,15 @@ body {
     color: #fff;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.profile-info{
+}
+.aboutCard {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
 }

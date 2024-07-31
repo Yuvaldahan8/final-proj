@@ -1,6 +1,46 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
 
+async function calculateTotalAmount(order) {
+    let totalAmount = 0;
+    for (let item of order.products) {
+        const product = await Product.findById(item.product);
+        if (product) {
+            totalAmount += item.quantity * product.price;
+        }
+    }
+    return totalAmount;
+}
+
+exports.addToCart = async (req, res) => {
+    const { productId, quantity } = req.body;
+    const userId = req.session.user._id;
+
+    try {
+        let order = await Order.findOne({ user: userId });
+        if (order) {
+            const existingProduct = order.products.find(item => item.product.toString() === productId);
+            if (existingProduct) {
+                existingProduct.quantity += +quantity;
+            } else {
+                order.products.push({ product: productId, quantity });
+            }
+        } else {
+            order = new Order({
+                user: userId,
+                products: [{ product: productId, quantity }]
+            });
+        }
+
+        order.totalAmount = await calculateTotalAmount(order);
+        await order.save();
+        res.json({ success: true, message: 'Product added to cart' });
+    } catch (error) {
+        console.error('Error adding product to cart:', error);
+        res.status(500).json({ error: 'An error occurred while adding the product to the cart' });
+    }
+};
+
 exports.updateCartItem = async (req, res) => {
     const { productId, quantity } = req.body;
     const userId = req.session.user._id;
@@ -11,6 +51,7 @@ exports.updateCartItem = async (req, res) => {
             const item = order.products.find(item => item.product.toString() === productId);
             if (item) {
                 item.quantity = quantity;
+                order.totalAmount = await calculateTotalAmount(order);
                 await order.save();
                 return res.json({ success: true });
             }
@@ -30,6 +71,7 @@ exports.removeCartItem = async (req, res) => {
         let order = await Order.findOne({ user: userId });
         if (order) {
             order.products = order.products.filter(item => item.product.toString() !== productId);
+            order.totalAmount = await calculateTotalAmount(order);
             await order.save();
             return res.json({ success: true });
         }

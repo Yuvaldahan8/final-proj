@@ -5,8 +5,15 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 6dfe8eb (Adding checkout page)
+=======
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> omri
+>>>>>>> parent of b970514 (Update app.js)
 const passport = require('passport');
 const path = require('path');
 const flash = require('connect-flash'); // הוספת connect-flash
@@ -15,12 +22,19 @@ const cartRoutes = require('./routes/cartRoutes'); // הוספת מסלולי ה
 const productRoutes = require('./routes/productRoutes');
 const facebookRoutes = require('./routes/facebookRoutes');
 <<<<<<< HEAD
+<<<<<<< HEAD
  
 
 const checkoutRoutes = require('./routes/checkoutRoutes'); // הוספת ניתוב checkout
 
 =======
 >>>>>>> parent of 6dfe8eb (Adding checkout page)
+=======
+=======
+const checkoutRoutes = require('./routes/checkoutRoutes'); // הוספת ניתוב checkout
+
+>>>>>>> omri
+>>>>>>> parent of b970514 (Update app.js)
 
 const WEATHER_API_KEY = 'ce875e55d220362a9393b2bb9c207688';
 
@@ -29,9 +43,14 @@ require('dotenv').config();
 // Connect to MongoDB
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
 >>>>>>> parent of ecc4410 (Adding checkout page)
 =======
 >>>>>>> parent of 6dfe8eb (Adding checkout page)
+=======
+>>>>>>> Stashed changes
+>>>>>>> omri
+>>>>>>> parent of b970514 (Update app.js)
 const connectDB = require("./config");
 connectDB();
 
@@ -39,17 +58,33 @@ connectDB();
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 <<<<<<< HEAD
+<<<<<<< HEAD
 const supplierroutes = require("./routes/supplierRoutes");
 =======
 >>>>>>> parent of 6dfe8eb (Adding checkout page)
+=======
+=======
+<<<<<<< Updated upstream
+const supplierroutes = require("./routes/supplierroutes");
+=======
+>>>>>>> omri
+>>>>>>> parent of b970514 (Update app.js)
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
 const facebookAuthRoutes = require("./routes/facebookAuth");
 const chartsRoutes = require("./routes/chartsRoutes"); 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> parent of 6dfe8eb (Adding checkout page)
+=======
+
+=======
+const checkoutRoutes = require('./routes/checkoutRoutes');
+>>>>>>> Stashed changes
+>>>>>>> omri
+>>>>>>> parent of b970514 (Update app.js)
 
 const app = express();
 
@@ -103,16 +138,29 @@ app.use((req, res, next) => {
 // Use the user routes
 app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
+<<<<<<< HEAD
 app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
+<<<<<<< HEAD
 <<<<<<< HEAD
 app.use("/supplier", supplierroutes);
 =======
 >>>>>>> parent of 6dfe8eb (Adding checkout page)
+=======
+=======
+<<<<<<< Updated upstream
+app.use("/supplier", supplierroutes);
+=======
+app.use("/supplier", supplierRoutes);
+app.use("/catalog", catalogRoutes);
+app.use(express.static('public'));
+>>>>>>> omri
+>>>>>>> parent of b970514 (Update app.js)
 app.use('/auth/facebook', facebookAuthRoutes);
 app.use('/charts', chartsRoutes);  // Add charts routes
 app.use('/products', productRoutes); // חיבור נתיבי המוצרים
 app.use('/cart', cartRoutes); // חיבור נתיבי העגלה
+<<<<<<< HEAD
 app.use("/profile", userRoutes);
 app.use("/facebook", facebookRoutes);
 
@@ -128,6 +176,7 @@ app.get('/weather', async (req, res) => {
     }
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 app.use('/checkout', checkoutRoutes);
 
@@ -139,6 +188,21 @@ app.use('/checkout', checkoutRoutes);
 >>>>>>> parent of ecc4410 (Adding checkout page)
 =======
 >>>>>>> parent of 6dfe8eb (Adding checkout page)
+=======
+=======
+<<<<<<< Updated upstream
+app.use('/checkout', checkoutRoutes);
+=======
+app.use("/profile", userRoutes);
+app.use("/facebook", facebookRoutes);
+app.use('/checkout', checkoutRoutes);
+
+>>>>>>> Stashed changes
+
+
+>>>>>>> Stashed changes
+>>>>>>> omri
+>>>>>>> parent of b970514 (Update app.js)
 
 // Start the server
 app.listen(3000, () => {

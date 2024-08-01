@@ -102,7 +102,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  color: white;
+  color: rgb(255, 255, 255);
   text-align: center;
   font-size: 18px;
 }
@@ -119,4 +119,28 @@ body {
 
 #weather-info p {
   margin: 0;
+}
+.flash-message {
+  margin-top: 100px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  right: 50%;
+  transform: translateX(-50%);
+  z-index: 99999; /* ערך גבוה כדי להיות מעל כל האלמנטים האחרים */
+  width: 100%;
+  box-shadow: transparent;
+  opacity: 0;
+  border-color:transparent ; 
+  transition: opacity 0.3s ease-in-out;
+  background-color: transparent; /* רקע שקוף */
+  padding: 15px;
+  border-radius: 5px;
+  color: #ffffff; /* צבע טקסט שחור כדי לוודא שהטקסט יהיה קריא */
+  font-size: xx-large;
+}
+
+/* אפקט של הופעה */
+.flash-message.show {
+  opacity: 1;
 }

@@ -120,3 +120,23 @@ body {
 #weather-info p {
   margin: 0;
 }
+.flash-message {
+  position: fixed;
+  top: 10%;
+  right: 40%; 
+  background-color:  rgba(180, 210, 186, 0.9);
+  border: 1px solid rgba(180, 210, 186, 0.9);
+  border-radius: 5px;
+  padding: 10px 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; 
+  max-width: 300px;
+  color: #333; 
+  font-size: 14px; 
+}
+
+.flash-message::after {
+  content: " "; 
+  display: block;
+  margin-bottom: 10px;
+}

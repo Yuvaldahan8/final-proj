@@ -5,6 +5,7 @@ const adminController = require("../controllers/adminController");
 const categoryController = require("../controllers/categoryController");
 const productController = require('../controllers/productController');
 
+
 router.get("/", adminController.renderAdmin);
 router.delete('/', adminController.deleteOrder);
 
@@ -19,4 +20,6 @@ router.post('/products', productController.addProduct);
 router.put('/products/:id', productController.editProduct);
 router.delete('/products/:id', productController.deleteProduct);
 
+
 module.exports = router;
+

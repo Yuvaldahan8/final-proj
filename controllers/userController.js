@@ -137,20 +137,4 @@ exports.getUserOrders = async (req, res) => {
     }
 };
 
-// Handle the user info update
-exports.updateUser = async (req, res) => {
-    const { name } = req.body;
-    const user = req.session.user;
 
-    if (!user) {
-        return res.redirect("/login?message=User is not logged in");
-    }
-
-    try {
-        await User.findByIdAndUpdate(user._id, { name });
-        user.name = name; // Update session user
-        res.redirect("/home?message=User info updated successfully");
-    } catch (err) {
-        res.render("editUser", { user, error: "Error updating user info" });
-    }
-};

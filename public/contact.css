@@ -1,5 +1,12 @@
+@font-face {
+    font-family: 'Lora';
+    src: url('https://fonts.gstatic.com/s/lora/v16/4iCnH7PItTix5zJFGXxQfFMV6ZwD5w.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Lora', Arial, sans-serif;
     background-color: #f0f0f0;
     padding-top: 56px;
     margin: 0;
@@ -16,7 +23,7 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    font-family: 'Calibri';
+    font-family: 'Lora', 'Calibri', sans-serif;
     background: rgba(0, 0, 0, 0.7);
     color: #fff;
     padding: 10px 0;
@@ -36,6 +43,7 @@ body {
     margin: 30px auto;
     max-width: 800px;
     text-align: center;
+    /* background: #f0f0f0; -- הוספתי את זה כדי לוודא שלא ידרוס את ה-background-color */
 }
 
 #contactContainer:hover {
@@ -43,31 +51,14 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 40px;
-    color:rgb(13, 78, 56);
-    font-family: 'Georgia', serif;
-}
-h2{
-    margin-top: 5px;
-    text-align: center;
-    font-size: 34px;
-    color:rgb(13, 78, 56);
-    font-family: 'Georgia', serif;
+h1, h2, h3 {
+    font-family: 'Lora', 'Georgia', serif;
 }
 
-h3{
-    text-align: center;
-    font-size: 25px;
-    color:rgb(0, 0, 0);
-    font-family: 'Georgia', serif;
-}
 .contact-details {
     font-size: 18px;
     color: #fff;
-    font-family: 'Calibri', sans-serif;
+    font-family: 'Lora', 'Calibri', sans-serif;
 }
 
 .contact-form {
@@ -82,7 +73,7 @@ h3{
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-family: 'Calibri', sans-serif;
+    font-family: 'Lora', 'Calibri', sans-serif;
 }
 
 .contact-form input:focus,
@@ -100,19 +91,13 @@ h3{
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-family: 'Calibri', sans-serif;
+    font-family: 'Lora', 'Calibri', sans-serif;
 }
 
 .contact-form button:hover {
     background-color: rgb(24, 119, 24);
 }
-#contactContainer {
-    position: relative;
-    z-index: 1;
-    padding: 20px;
-    background: #f0f0f0;
-    overflow: hidden;
-}
+
 canvas {
     position: absolute;
     top: 0;

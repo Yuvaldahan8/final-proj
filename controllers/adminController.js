@@ -45,3 +45,14 @@ exports.deleteOrder = async (req, res) => {
         }
     }
 };
+exports.renderUsersList = async (req, res) => {
+    try {
+        // Fetch all users from the database
+        const users = await User.find({});
+        // Render the users list view with the users data
+        res.render('usersList', { users });
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).send("An error occurred while fetching users.");
+    }
+};

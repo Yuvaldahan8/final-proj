@@ -26,7 +26,7 @@ connectDB();
 // Routes
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const supplierroutes = require("./routes/supplierroutes");
+const supplierroutes = require("./routes/supplierRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
 const facebookAuthRoutes = require("./routes/facebookAuth");

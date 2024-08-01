@@ -5,6 +5,13 @@ const adminController = require("../controllers/adminController");
 const categoryController = require("../controllers/categoryController");
 const productController = require('../controllers/productController');
 
+router.get('/users', adminController.viewUsers); // מסלול לצפייה בכל המשתמשים
+router.get('/admin', adminController.renderAdmin); // ודא שהפונקציה קיימת במנהל הקונטרולר
+
+// Route for viewing users
+router.get('/admin/users', adminController.viewUsers); 
+
+
 router.get("/", adminController.renderAdmin);
 router.delete('/', adminController.deleteOrder);
 

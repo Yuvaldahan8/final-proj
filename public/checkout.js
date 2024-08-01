@@ -26,17 +26,10 @@ cardNumber.addEventListener("keyup", (e) => {
             e.target.value = valuesOfInput.replace(/(\d{4})(\d{0,4})/, "$1 $2");
             cardNumberText.innerHTML = valuesOfInput.replace(/(\d{4})(\d{0,4})/, "$1 $2");
         } else {
-<<<<<<< Updated upstream
             cardNumberText.innerHTML = valuesOfInput
         }
     }
 })
-=======
-            cardNumberText.innerHTML = valuesOfInput;
-        }
-    }
-});
->>>>>>> Stashed changes
 
 cardHolder.addEventListener("keyup", (e) => {
     if (!e.target.value) {
@@ -44,11 +37,7 @@ cardHolder.addEventListener("keyup", (e) => {
     } else {
         cardHolderText.innerHTML = e.target.value.toUpperCase();
     }
-<<<<<<< Updated upstream
 })
-=======
-});
->>>>>>> Stashed changes
 
 cardExpiration.addEventListener("keyup", (e) => {
     if (!e.target.value) {
@@ -63,11 +52,7 @@ cardExpiration.addEventListener("keyup", (e) => {
             cardExpirationText.innerHTML = valuesOfInput;
         }
     }
-<<<<<<< Updated upstream
 })
-=======
-});
->>>>>>> Stashed changes
 
 cardCVV.addEventListener("keyup", (e) => {
     if (!e.target.value) {
@@ -75,22 +60,10 @@ cardCVV.addEventListener("keyup", (e) => {
     } else {
         cardCVVText.innerHTML = e.target.value;
     }
-<<<<<<< Updated upstream
 })
-=======
-});
->>>>>>> Stashed changes
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-<<<<<<< Updated upstream
     alert("Your order has been sent!");
 })
-=======
-    const confirmed = confirm("Your order has been sent!");
-    if (confirmed) {
-        window.location.href='/home';
-    }
-});
->>>>>>> Stashed changes

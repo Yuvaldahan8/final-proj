@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const axios = require('axios');
 const methodOverride = require('method-override');
@@ -16,18 +17,19 @@ const checkoutRoutes = require('./routes/checkoutRoutes'); // הוספת נית�
 
 const WEATHER_API_KEY = 'ce875e55d220362a9393b2bb9c207688';
 
-require('dotenv').config();
+
 
 // Connect to MongoDB
 const connectDB = require("./config");
 connectDB();
+require('./passport');
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
-const facebookAuthRoutes = require("./routes/facebookAuth");
+
 const chartsRoutes = require("./routes/chartsRoutes"); 
 
 
@@ -85,8 +87,8 @@ app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
-app.use(express.static('public'));
-app.use('/auth/facebook', facebookAuthRoutes);
+
+
 app.use('/charts', chartsRoutes);  // Add charts routes
 app.use('/products', productRoutes); // חיבור נתיבי המוצרים
 app.use('/cart', cartRoutes); // חיבור נתיבי העגלה

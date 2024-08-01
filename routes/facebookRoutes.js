@@ -1,8 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
-const facebookController = require("../controllers/facebookController");
+router.get('/',
+  passport.authenticate('facebook'));
 
-router.get("/", facebookController.renderFacebook);
+router.get('/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 module.exports = router;

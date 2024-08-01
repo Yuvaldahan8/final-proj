@@ -66,4 +66,6 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     alert("Your order has been sent!");
+    window.location.href = '/home';
+
 })

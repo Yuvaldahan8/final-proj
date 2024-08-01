@@ -121,3 +121,13 @@ canvas {
     height: 100%;
     pointer-events: none;
 }
+
+#weather-info {
+    margin-left: auto;
+    font-size: 12px;
+    padding: 0;
+}
+
+#weather-info p {
+    margin: 0;
+}

@@ -2,13 +2,8 @@ const Category = require("../models/category");
 const Product = require("../models/product");
 
 exports.listCategories = async (req, res) => {
-    if (!req.session.user) {
-        res.redirect("/login?message=User is not logged in"); 
-    }
-    else {
-        const categories = await Category.find().populate('products');
-        res.render(`${req.session.user.role}/categories`, { categories, user: req.session.user });
-    }
+    const categories = await Category.find().populate('products');
+    res.render(`${req.session.user.role}/categories`, { categories, user: req.session.user });
 };
 
 exports.addCategory = async (req, res) => {

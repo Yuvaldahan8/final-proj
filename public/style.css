@@ -71,3 +71,13 @@ img {
     color: #929191;
     margin-bottom: 5px;
 }
+
+#weather-info {
+    margin-left: auto;
+    font-size: 12px;
+    padding: 0;
+}
+
+#weather-info p {
+    margin: 0;
+}

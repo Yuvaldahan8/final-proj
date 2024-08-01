@@ -14,8 +14,7 @@ router.get("/edit-user", userController.renderEditUser);
 router.post("/edit-user", userController.updateUser);
 
 
-
-router.get("/", userController.renderLogin);
+router.get("/", userController.renderHome);
 router.get("/home", userController.renderHome);
 router.get("/login", userController.renderLogin);
 router.get("/signup", userController.renderSignup);

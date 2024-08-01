@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require('axios');
 const methodOverride = require('method-override');
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -8,6 +9,9 @@ const flash = require('connect-flash'); // הוספת connect-flash
 const User = require('./models/user');
 const cartRoutes = require('./routes/cartRoutes'); // הוספת מסלולי העגלה
 const productRoutes = require('./routes/productRoutes');
+const facebookRoutes = require('./routes/facebookRoutes');
+
+const WEATHER_API_KEY = 'ce875e55d220362a9393b2bb9c207688';
 
 require('dotenv').config();
 
@@ -61,8 +65,10 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Set view engine
-app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, 'views'));
+app.set("view engine", "ejs");
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware to make flash messages available in all templates
 app.use((req, res, next) => {
@@ -76,12 +82,25 @@ app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
-app.use(express.static('public'));
 app.use('/auth/facebook', facebookAuthRoutes);
 app.use('/charts', chartsRoutes);  // Add charts routes
 app.use('/products', productRoutes); // חיבור נתיבי המוצרים
 app.use('/cart', cartRoutes); // חיבור נתיבי העגלה
 app.use("/profile", userRoutes);
+app.use("/facebook", facebookRoutes);
+
+
+app.get('/weather', async (req, res) => {
+    const { city } = req.query;
+    try {
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_API_KEY}&units=metric`);
+        res.json(response.data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch weather data' });
+    }
+});
+
 // Start the server
 app.listen(3000, () => {
     console.log("Server is running on port 3000");

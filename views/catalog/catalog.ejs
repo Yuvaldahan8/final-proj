@@ -10,39 +10,51 @@
     />
     <link rel="stylesheet" href="../catalog.css">
     <link rel="stylesheet" href="../style.css">
+    <script defer src="../weather.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
-    <a class="navbar-brand" href="#">Nursery</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse mr-auto">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="/home">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/catalog">Catalog</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/about.html">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/contact.html">Contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/cart">Cart</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/profile">profile</a>
-            </li>
-        </ul>
-        <span class="navbar-text ml-auto">Welcome, <%= user.name %>!</span>
-        <a href="/logout" class="btn btn-danger ml-3">Logout</a>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
+        <a class="navbar-brand" href="#">Nursery</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse mr-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/catalog">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/facebook">Facebook</a>
+                </li>
+            </ul>
+            <span class="navbar-text" id="weather-info">
+                Loading weather...
+            </span>
+            <% if (user) { %>
+                <span class="navbar-text ml-auto">Welcome, <%= user.name %>!</span>
+                <a href="/logout" class="btn btn-danger ml-3">Logout</a>
+            <% } else { %>
+                <span class="navbar-text ml-auto">Hello guest!</span>
+                <a href="/login" class="btn btn-danger ml-3">Login</a>
+            <% } %>
+        </div>
+    </nav>
 
 <% if (success_msg) { %>
     <div class="alert alert-success flash-message" role="alert">

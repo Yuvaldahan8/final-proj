@@ -5,3 +5,10 @@ body{
     background-color:#008080;
     border-color: #008080;
 }
+
+.order-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}

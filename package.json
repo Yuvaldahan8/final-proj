@@ -26,5 +26,6 @@
         "qs": "^6.12.3",
         "request": "^2.88.2"
     },
+    "devDependencies": {},
     "description": ""
 }

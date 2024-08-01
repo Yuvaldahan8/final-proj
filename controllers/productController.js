@@ -2,6 +2,8 @@ const Category = require("../models/category");
 const Product = require("../models/product");
 const Order = require("../models/order");
 const User = require("../models/user");
+const facebookController = require('./facebookController'); 
+
 
 exports.renderProducts = async (req, res) => {
     try {
@@ -68,6 +70,10 @@ exports.addProduct = async (req, res) => {
             supplier,
         });
         await newProduct.save();
+
+        facebookController.postToFacebook(name, description, price);
+
+        
         res.redirect(`/${req.session.user.role}/products`);
     } catch (error) {
         console.error(error);

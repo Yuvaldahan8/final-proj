@@ -62,6 +62,7 @@ $(document).ready(function() {
 
         // קריאת AJAX להסרת פריט
         removeCartItem(productId);
+
     });
 
     // ניקוי העגלה
@@ -74,6 +75,7 @@ $(document).ready(function() {
             url: '/cart/clear',
             method: 'POST',
             success: function(response) {
+                    location.reload();
                 $('.product-grid').empty();
                 $('#totalAmount').text('0.00');
             },
@@ -114,6 +116,7 @@ $(document).ready(function() {
             data: { productId: productId },
             success: function(response) {
                 console.log('Cart item removed');
+                location.reload();
             },
             error: function(error) {
                 console.error('Error removing cart item:', error);

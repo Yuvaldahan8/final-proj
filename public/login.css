@@ -20,15 +20,3 @@ body, html {
     max-width: 900px; 
     min-width: 400px; 
 }
-
-.facebook-button {
-    margin-top: 20px;
-    background-color: #3b5998; 
-    border-color: #3b5998; 
-    color: white; 
-}
-
-.facebook-button:hover {
-    background-color: #2d4373; 
-    border-color: #2d4373; 
-}

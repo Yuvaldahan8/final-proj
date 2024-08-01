@@ -120,24 +120,3 @@ body {
 #weather-info p {
   margin: 0;
 }
-.flash-message {
-  position: fixed;
-  top: 120px; 
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000000; 
-  width: 90%; 
-  max-width: 800px; 
-  background-color:transparent; 
-  transition: opacity 0.5s ease-out; /* מעבר חלק להופעה והסרה */
-  padding: 15px;
-  border-color: transparent;
-  color: #ffffff; /* צבע טקסט לבן */
-  font-size: xx-large; /* גודל טקסט XXL */
-  text-align: center; /* מרכז את הטקסט בתוך ההודעה */
-}
-
-/* אפקט של הופעה */
-.flash-message.show {
-  opacity: 1;
-}

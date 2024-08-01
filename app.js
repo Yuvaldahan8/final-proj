@@ -10,7 +10,7 @@ const User = require('./models/user');
 const cartRoutes = require('./routes/cartRoutes'); // הוספת מסלולי העגלה
 const productRoutes = require('./routes/productRoutes');
 const facebookRoutes = require('./routes/facebookRoutes');
- HEAD
+ 
 
 const checkoutRoutes = require('./routes/checkoutRoutes'); // הוספת ניתוב checkout
 

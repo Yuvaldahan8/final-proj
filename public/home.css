@@ -6,6 +6,18 @@ body, html {
   background-color: #f5e8d5;
 }
 
+h2{
+  font-size:xx-large;
+  font-family: 'Georgia', serif;
+  font-weight: 800;
+
+}
+p{
+  font-size:larger;
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+
+}
 .parallax-container {
   height: 100vh;
   overflow-y: auto;

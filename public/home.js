@@ -21,5 +21,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // הצג את התמונה הראשונה בטעינה
-    images[0].classList.add('active');
+    // images[0].classList.add('active');
   });

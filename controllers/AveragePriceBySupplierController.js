@@ -14,13 +14,22 @@ exports.getAveragePriceBySupplier = async (req, res) => {
                     from: "users",
                     localField: "_id",
                     foreignField: "_id",
-                    as: "supplier"
+                    as: "supplierDetails"
                 }
             },
-            { $unwind: "$supplier" }
+            { $unwind: "$supplierDetails" }
         ]);
-        res.json(averagePriceBySupplier);
+
+    
+        if (!averagePriceBySupplier.length) {
+            return res.status(404).send("לא נמצאו נתונים");
+        }
+
+        res.render('charts/averagePriceBySupplier', {
+            averagePriceBySupplier
+        });
     } catch (error) {
+        console.error("שגיאה ב-getAveragePriceBySupplier:", error);
         res.status(500).send(error);
     }
 };

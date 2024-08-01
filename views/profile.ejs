@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="google-maps.css">
+    <script defer src="weather.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
+        <a class="navbar-brand" href="#">Nursery</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse mr-auto">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/catalog">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/facebook">Facebook</a>
+                </li>
+            </ul>
+            <span class="navbar-text" id="weather-info">
+                Loading weather...
+            </span>
+            <% if (user) { %>
+                <span class="navbar-text ml-auto">Welcome, <%= user.name %>!</span>
+                <a href="/logout" class="btn btn-danger ml-3">Logout</a>
+            <% } else { %>
+                <span class="navbar-text ml-auto">Hello guest!</span>
+                <a href="/login" class="btn btn-danger ml-3">Login</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <div class="aboutCard ">
+        <div class="container mt-4">
+            <h1>👩🏻‍🌾 My Profile 👩🏻‍🌾</h1>
+
+            <div class="profile-info">
+                <p><strong>Name:</strong> <%= user.name %></p>
+                <p><strong>Email:</strong> <%= user.email %></p>
+            </div>
+
+            <div class="orders mt-4">
+                <h2>Order History</h2>
+                <% if (orders && orders.length > 0) { %>
+                    <div class="accordion" id="orderAccordion">
+                        <% orders.forEach((order, index) => { %>
+                            <div class="card">
+                                <div class="card-header" id="heading<%= index %>">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                                            Order ID: <%= order._id %> - Date: <%= new Date(order.createdAt).toLocaleDateString() %> - Total Amount: $<%= order.totalAmount %>
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#orderAccordion">
+                                    <div class="card-body">
+                                        <h4>Products:</h4>
+                                        <% if (order.products && order.products.length > 0) { %>
+                                            <ul>
+                                                <% order.products.forEach(item => { %>
+                                                    <li>
+                                                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: $<%= item.product.price %> each
+                                                    </li>
+                                                <% }) %>
+                                            </ul>
+                                        <% } else { %>
+                                            <p>No products in this order.</p>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } else { %>
+                    <p>No orders found.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <footer class="footer mt-4 py-3 bg-light">
+        <div class="container">
+            <p class="text-center mb-0">© 2024 Your Company. All rights reserved.</p>
+            <div class="map-container mt-3">
+                <iframe 
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAr8nacr00NVWLE8lGflhHvD-YHUMibLE4&q=Elie+Wiesel+2,+Rishon+Lezion,+Israel" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+

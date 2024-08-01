@@ -110,3 +110,13 @@ body {
 .product-container img {
   margin: 0 auto 30px auto;
 }
+
+#weather-info {
+  margin-left: auto;
+  font-size: 12px;
+  padding: 0;
+}
+
+#weather-info p {
+  margin: 0;
+}

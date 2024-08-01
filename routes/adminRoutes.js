@@ -6,6 +6,7 @@ const categoryController = require("../controllers/categoryController");
 const productController = require('../controllers/productController');
 
 router.get("/", adminController.renderAdmin);
+router.delete('/', adminController.deleteOrder);
 
 router.get("/categories", categoryController.listCategories);
 router.post("/categories", categoryController.addCategory);

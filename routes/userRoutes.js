@@ -14,8 +14,7 @@ router.get("/edit-user", userController.renderEditUser);
 router.post("/edit-user", userController.updateUser);
 
 
-
-router.get("/", userController.renderLogin);
+router.get("/", userController.renderHome);
 router.get("/home", userController.renderHome);
 router.get("/login", userController.renderLogin);
 router.get("/signup", userController.renderSignup);
@@ -26,8 +25,9 @@ router.post("/login", userController.login);
 
 router.get("/cart", productController.viewCart);
 router.post("/cart", productController.addToCart);
+router.post("/cart/clear", productController.clearCart); 
 router.get("/user-counts-by-role", userStatsController.getUserCountsByRole);
-
-
+router.get("/profile", userController.renderProfile);
+router.get("/user-orders", userController.getUserOrders);
 module.exports = router;
 

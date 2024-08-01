@@ -1,4 +1,5 @@
-exports.renderAdmin = (req, res) => {
+const Order = require("../models/order");
+exports.renderAdmin = async (req, res) => {
     if (!req.session.user) {
         res.redirect("/login?message=User is not logged in"); 
     }
@@ -8,7 +9,39 @@ exports.renderAdmin = (req, res) => {
             res.redirect("/login?message=User is not logged in as admin"); 
         }
         else {
-            res.render("admin/admin", { user });
+            let orders = [];
+            orders = await Order.find().populate(
+                "products.product"
+            );
+            res.render("admin/admin", { user, orders });
+        }
+    }
+};
+
+exports.deleteOrder = async (req, res) => {
+    if (!req.session.user) {
+        res.redirect("/login?message=User is not logged in"); 
+    }
+    else {
+        const user = req.session.user;
+        if (user.role !== 'admin') {
+            res.redirect("/login?message=User is not logged in as admin"); 
+        }
+        else {
+            try {
+                const id = req.query.orderId;
+                await Order.findByIdAndDelete(id);
+    
+                let orders = [];
+                orders = await Order.find().populate(
+                    "products.product"
+                );
+                res.render("admin/admin", { user, orders });
+    
+            } catch (error) {
+                console.error(error);
+                res.status(500).send('Error deleting order');
+            }
         }
     }
 };

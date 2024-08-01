@@ -10,49 +10,101 @@
         />
         <link rel="stylesheet" href="cart.css">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="google-maps.css">
+        <script defer src="weather.js"></script>
     </head>
+    
     <body class="cart-body">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarCart">
-            <a class="navbar-brand" href="#">Shop</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="topNavBarHome">
+            <a class="navbar-brand" href="#">Nursery</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse mr-auto">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
                         <a class="nav-link" href="/home">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/catalog">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/facebook">Facebook</a>
+                    </li>
                 </ul>
-                <span class="navbar-text">Welcome, <%= user.name %>!</span>
+                <span class="navbar-text" id="weather-info">
+                    Loading weather...
+                </span>
+                <span class="navbar-text ml-auto">Welcome, <%= user.name %>!</span>
                 <a href="/logout" class="btn btn-danger ml-3">Logout</a>
             </div>
         </nav>
-
-        <div class="container mt-5">
-            <div class="checkout-container">
-                <h2 class="mb-4">Your Order</h2>
-                <% if (order && order.products && order.products.length > 0) { %>
-                    <div class="product-grid">
-                        <% order.products.forEach(item => { %>
-                            <div class="product-item">
-                                <h5 class="productNameCart"><%= item.product.name %></h5>
-                                <p>Quantity: <%= item.quantity %></p>
-                                <p><strong>Price: $<%= item.product.price * item.quantity %></strong></p>
+        
+    <div class="container mt-5">
+        <div class="checkout-container">
+            <h2 class="mb-4">Your Order</h2>
+            <% if (order && order.products && order.products.length > 0) { %>
+                <div class="product-grid">
+                    <% order.products.forEach((item, index) => { %>
+                        <div class="product-item" data-product-id="<%= item.product._id %>">
+                            <h5 class="productNameCart"><%= item.product.name %></h5>
+                            <div class="quantity-control">
+                                <button class="btn btn-sm btn-secondary decrease-quantity">-</button>
+                                <span class="quantity"><%= item.quantity %></span>
+                                <button class="btn btn-sm btn-secondary increase-quantity">+</button>
                             </div>
-                        <% }); %>
-                    </div>
-                    <div class="order-summary mt-4 text-center">
-                        <h3>Total: $<%= order.totalAmount %></h3>
-                        <form action="/checkout" method="POST">
-                            <button type="submit" class="btn btn-primary btn-lg mt-3">Proceed to Checkout</button>
-                        </form>
-                    </div>
-                <% } else { %>
-                    <p>Your cart is empty.</p>
-                <% } %>
-            </div>
+                            <p><strong>Price: $<span class="item-price"><%= item.product.price * item.quantity %></span></strong></p>
+                            <button class="btn btn-danger btn-sm remove-item">Remove</button>
+                            
+                        </div>
+                    <% }); %>
+                </div>
+                <div class="order-summary mt-4 text-center">
+                    <h3>Total: $<span id="totalAmount"><%= order.totalAmount %></span></h3>
+                    <form action="/checkout" method="POST">
+                        <button type="submit" class="btn btn-primary btn-lg mt-3">Proceed to Checkout</button>
+                    </form>
+                    <button id="clearCartBtn" class="btn btn-danger btn-lg mt-3">Clear Cart</button>
+                </div>
+            <% } else { %>
+                <p>Your cart is empty.</p>
+            <% } %>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="script.js"></script>
+        <div>
+
+            
+        </div>
+    
+        <footer class="footer mt-4 py-3 bg-light">
+            <div class="container">
+                <p class="text-center mb-0">© 2024 Your Company. All rights reserved.</p>
+                <div class="map-container mt-3">
+                    <iframe 
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAr8nacr00NVWLE8lGflhHvD-YHUMibLE4&q=Elie+Wiesel+2,+Rishon+Lezion,+Israel" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </footer>
     </body>
-</html>
+    </html>

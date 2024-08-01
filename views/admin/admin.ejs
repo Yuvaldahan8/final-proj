@@ -9,6 +9,8 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="admin.css">
+        <script defer src="../weather.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,8 +28,55 @@
 
         <div class="container">
             <div class="mt-4">
-                <a href="/admin/categories" class="btn btn-primary">Manage Categories</a>
-                <a href="/admin/products" class="btn btn-primary">Manage Products</a>
+                <a href="/admin/categories" class="btn btn-primary adminBottoms">Manage Categories</a>
+                <a href="/admin/products" class="btn btn-primary adminBottoms">Manage Products</a>
+            </div>
+            <div class="mt-4">
+                <a href="/charts/averagePriceBySupplier" class="btn btn-secondary">View Average Price by Supplier</a>
+                <a href="/charts/userCountsByRole" class="btn btn-secondary">View User Counts by Role</a>
+                <a href="/charts/productsGroupedBySupplier" class="btn btn-secondary">View Products Grouped by Supplier</a>
+                <a href="/charts/productsGroupedByCategory" class="btn btn-secondary">View Products Grouped by Category</a>
+            </div>
+
+            <div class="orders mt-4">
+                <h2>Order History</h2>
+                <% if (orders && orders.length > 0) { %>
+                    <div class="accordion" id="orderAccordion">
+                        <% orders.forEach((order, index) => { %>
+                            <div class="card">
+                                <div class="card-header order-flex" id="heading<%= index %>">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= index %>" aria-expanded="true" aria-controls="collapse<%= index %>">
+                                            Order ID: <%= order._id %> - Date: <%= new Date(order.createdAt).toLocaleDateString() %> - Total Amount: $<%= order.totalAmount %>
+                                        </button>
+                                    </h5>
+                                    <form action="/admin?_method=DELETE&orderId=<%= order._id %>" method="POST" style="display: inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm float-right">Delete</button>
+                                    </form>
+                                </div>
+
+                                <div id="collapse<%= index %>" class="collapse" aria-labelledby="heading<%= index %>" data-parent="#orderAccordion">
+                                    <div class="card-body">
+                                        <h4>Products:</h4>
+                                        <% if (order.products && order.products.length > 0) { %>
+                                            <ul>
+                                                <% order.products.forEach(item => { %>
+                                                    <li>
+                                                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: $<%= item.product.price %> each
+                                                    </li>
+                                                <% }) %>
+                                            </ul>
+                                        <% } else { %>
+                                            <p>No products in this order.</p>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } else { %>
+                    <p>No orders found.</p>
+                <% } %>
             </div>
         </div>
 

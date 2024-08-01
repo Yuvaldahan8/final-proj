@@ -1,3 +1,4 @@
+const Product = require('../models/product');
 
 exports.getProductsGroupedBySupplier = async (req, res) => {
     try {
@@ -18,13 +19,14 @@ exports.getProductsGroupedBySupplier = async (req, res) => {
             },
             { $unwind: "$supplierDetails" }
         ]);
-        res.json(productsGroupedBySupplier);
+
+        res.render('charts/productsGroupedBySupplier', {
+            productsGroupedBySupplier
+        });
     } catch (error) {
         res.status(500).send(error);
     }
 };
-
-const Product = require('../models/product');
 
 exports.getProductsGroupedByCategory = async (req, res) => {
     try {
@@ -45,9 +47,11 @@ exports.getProductsGroupedByCategory = async (req, res) => {
             },
             { $unwind: "$categoryDetails" }
         ]);
-        res.json(productsGroupedByCategory);
+
+        res.render('charts/productsGroupedByCategory', {
+            productsGroupedByCategory
+        });
     } catch (error) {
         res.status(500).send(error);
     }
 };
-

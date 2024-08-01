@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <main class="container">
+        <section class="ui">
+            <div class="container-left">
+                <form id="credit-card" action="/checkout" method="POST">
+                    <div class="number-container">
+                        <label>Card Number</label>
+                        <input type="text" name="card-number" id="card-number" maxlength="19"
+                        required
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+                    <div class="name-container">
+                        <label>NAME HOLDER</label>
+                        <input type="text" name="name-text" id="name-text" maxlength="30"
+                        required
+                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.key == ' '">
+                    </div>
+                    <div class="infos-container">
+                        <div class="expiration-container">
+                            <label>MM/YY</label>
+                            <input type="text" name="valid-thru-text" id="valid-thru-text" maxlength="5"
+                            required
+                            onkeypress="return event.charCode >=48 && event.charCode <= 57">
+                        </div>
+                        <div class="cvv-container">
+                            <label>CVV</label>
+                            <input type="text" name="cvv-text" id="cvv-text" maxlength="3"
+                            required
+                            onkeypress="return event.charCode >=48 && event.charCode <= 57">
+                        </div>
+                    </div>
+                    <input type="submit" value="Place Order" id="place-order">
+                </form>
+            </div>
+            <div class="container-right">
+                <div class="card">
+                    <div class="intern">
+<<<<<<< Updated upstream
+                        <img class="approximation" src="1.svg" alt="aproximation">
+=======
+                        <img class="approximation" src="images/1.svg" alt="aproximation">
+>>>>>>> Stashed changes
+                        <div class="card-number">
+                            <div class="number-vl"></div>
+                        </div>
+                        <div class="card-holder">
+                            <label>NAME</label>
+                            <div class="name-vl"></div>
+                        </div>
+                        <div class="card-infos">
+                            <div class="exp">
+                                <label>MM/YY</label>
+                                <div class="expiration-vl"></div>
+                            </div>
+                            <div class="cvv">
+                                <label>CVV</label>
+                                <div class="cvv-vl"></div>
+                            </div>
+                        </div>
+<<<<<<< Updated upstream
+                        <img class="chip" src="chip.png" alt="chip">
+=======
+                        <img class="chip" src="images/chip.png" alt="chip">
+>>>>>>> Stashed changes
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+<<<<<<< Updated upstream
+=======
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+>>>>>>> Stashed changes
+    <script src="checkout.js"></script>
+</body>
+</html>

@@ -10,7 +10,9 @@ const User = require('./models/user');
 const cartRoutes = require('./routes/cartRoutes'); // הוספת מסלולי העגלה
 const productRoutes = require('./routes/productRoutes');
 const facebookRoutes = require('./routes/facebookRoutes');
-const checkoutRoutes = require('./routes/checkoutRoutes');
+const checkoutRoutes = require('./routes/checkoutRoutes'); // הוספת ניתוב checkout
+
+
 
 const WEATHER_API_KEY = 'ce875e55d220362a9393b2bb9c207688';
 
@@ -83,14 +85,14 @@ app.use("/", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/supplier", supplierRoutes);
 app.use("/catalog", catalogRoutes);
+app.use(express.static('public'));
 app.use('/auth/facebook', facebookAuthRoutes);
 app.use('/charts', chartsRoutes);  // Add charts routes
 app.use('/products', productRoutes); // חיבור נתיבי המוצרים
 app.use('/cart', cartRoutes); // חיבור נתיבי העגלה
+
 app.use("/profile", userRoutes);
 app.use("/facebook", facebookRoutes);
-app.use("/checkout", checkoutRoutes);
-
 
 
 app.get('/weather', async (req, res) => {
@@ -103,6 +105,16 @@ app.get('/weather', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch weather data' });
     }
 });
+
+
+
+
+
+app.use('/checkout', checkoutRoutes);
+app.use("/profile", userRoutes);
+app.use("/facebook", facebookRoutes);
+app.use('/checkout', checkoutRoutes);
+
 
 // Start the server
 app.listen(3000, () => {

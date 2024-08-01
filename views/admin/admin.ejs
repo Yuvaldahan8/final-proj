@@ -37,38 +37,40 @@
                 <a href="/charts/productsGroupedBySupplier" class="btn btn-secondary">View Products Grouped by Supplier</a>
                 <a href="/charts/productsGroupedByCategory" class="btn btn-secondary">View Products Grouped by Category</a>
             </div>
-            <div class="users mt-4">
-                <h2>User List</h2>
-                <% if (users && users.length > 0) { %>
-                    <div class="accordion" id="userAccordion">
-                        <% users.forEach((user, index) => { %>
-                            <div class="card">
-                                <div class="card-header" id="headingUser<%= index %>">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseUser<%= index %>" aria-expanded="true" aria-controls="collapseUser<%= index %>">
-                                            User ID: <%= user._id %> - Name: <%= user.name %> - Email: <%= user.email %> - Role: <%= user.role %>
-                                        </button>
-                                    </h5>
-                                </div>
+            <div class="container mt-4"> 
+            <h2>User List</h2>
+                
+               
+            <% if (users && users.length > 0) { %>
+                <div class="accordion mt-4" id="userAccordion">
+                    <% users.forEach((user, index) => { %>
+                        <div class="card">
+                            <div class="card-header" id="headingUser<%= index %>">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseUser<%= index %>" aria-expanded="true" aria-controls="collapseUser<%= index %>">
+                                        User ID: <%= user._id %> - Name: <%= user.name %> - Email: <%= user.email %> - Role: <%= user.role %>
+                                    </button>
+                                </h5>
+                            </div>
 
-                                <div id="collapseUser<%= index %>" class="collapse" aria-labelledby="headingUser<%= index %>" data-parent="#userAccordion">
-                                    <div class="card-body">
-                                        <h4>User Details:</h4>
-                                        <p>Email: <%= user.email %></p>
-                                        <p>Role: <%= user.role %></p>
-                                        <p>Provider: <%= user.provider %></p>
-                                    </div>
+                            <div id="collapseUser<%= index %>" class="collapse" aria-labelledby="headingUser<%= index %>" data-parent="#userAccordion">
+                                <div class="card-body">
+                                    <h4>User Details:</h4>
+                                    <p>Email: <%= user.email %></p>
+                                    <p>Role: <%= user.role %></p>
+                                    <p>Provider: <%= user.provider %></p>
                                 </div>
                             </div>
-                        <% }) %>
-                    </div>
-                <% } else { %>
-                    <p>No users found.</p>
-                <% } %>
-            </div>
-            <div class="orders mt-4">
-                <h2>Order History</h2>
-                <% if (orders && orders.length > 0) { %>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <p>No users found.</p>
+            <% } %>
+            
+            <% if (orders && orders.length > 0) { %>
+                <div class="orders mt-4">
+                    <h2>Order History</h2>
                     <div class="accordion" id="orderAccordion">
                         <% orders.forEach((order, index) => { %>
                             <div class="card">
@@ -102,10 +104,13 @@
                             </div>
                         <% }) %>
                     </div>
-                <% } else { %>
+                </div>
+            <% } else if (users && users.length > 0) { %>
+                <!-- Only display this part if there are users, and no orders -->
+                <div class="mt-4">
                     <p>No orders found.</p>
-                <% } %>
-            </div>
+                </div>
+            <% } %>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

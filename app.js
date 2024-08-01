@@ -12,6 +12,7 @@ const cartRoutes = require('./routes/cartRoutes'); // הוספת מסלולי ה
 const productRoutes = require('./routes/productRoutes');
 const facebookRoutes = require('./routes/facebookRoutes');
 const checkoutRoutes = require('./routes/checkoutRoutes'); // הוספת ניתוב checkout
+const adminController = require('./controllers/adminController');
 
 
 
@@ -31,7 +32,6 @@ const supplierRoutes = require("./routes/supplierRoutes");
 const catalogRoutes = require("./routes/catalogRoutes");
 
 const chartsRoutes = require("./routes/chartsRoutes"); 
-
 
 const app = express();
 
@@ -96,6 +96,7 @@ app.use('/cart', cartRoutes); // חיבור נתיבי העגלה
 app.use("/profile", userRoutes);
 app.use("/facebook", facebookRoutes);
 
+app.get('/admin/viewUsers', adminController.viewUsers);
 
 app.get('/weather', async (req, res) => {
     const { city } = req.query;

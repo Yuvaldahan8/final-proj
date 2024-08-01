@@ -4,7 +4,7 @@ const qs = require('qs'); // נשתמש ב-qs כדי לעבד את הנתוני�
 const accessToken = process.env.FACEBOOK_ACCESS_TOKEN; // טוקן הגישה שקיבלת
 const pageId = process.env.FACEBOOK_PAGE_ID; // ID של העמוד שלך
 
-exports.postToFacebook = async (name, description, price, imageUrl) => {
+exports.postToFacebook = async (name, description, price) => {
     const message = `ALERT! NEW PRODUCT JUST ADDED TO OUR WEB! COME VIST:) : ${name}\nDescription: ${description}\nPrice: $${price}`;
 
     try {

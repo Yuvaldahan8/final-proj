@@ -66,4 +66,8 @@ form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     alert("Your order has been sent!");
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> parent of ecc4410 (Adding checkout page)

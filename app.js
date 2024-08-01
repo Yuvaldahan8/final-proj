@@ -3,6 +3,7 @@ const axios = require('axios');
 const methodOverride = require('method-override');
 const bodyParser = require("body-parser");
 const session = require("express-session");
+<<<<<<< HEAD
 const passport = require('passport');
 const path = require('path');
 const flash = require('connect-flash'); // הוספת connect-flash
@@ -20,6 +21,8 @@ const WEATHER_API_KEY = 'ce875e55d220362a9393b2bb9c207688';
 require('dotenv').config();
 
 // Connect to MongoDB
+=======
+>>>>>>> parent of ecc4410 (Adding checkout page)
 const connectDB = require("./config");
 connectDB();
 
@@ -91,6 +94,7 @@ app.use('/auth/facebook', facebookAuthRoutes);
 app.use('/charts', chartsRoutes);  // Add charts routes
 app.use('/products', productRoutes); // חיבור נתיבי המוצרים
 app.use('/cart', cartRoutes); // חיבור נתיבי העגלה
+<<<<<<< HEAD
 app.use("/profile", userRoutes);
 app.use("/facebook", facebookRoutes);
 
@@ -108,6 +112,12 @@ app.get('/weather', async (req, res) => {
 
 app.use('/checkout', checkoutRoutes);
 
+=======
+app.use('/checkout', checkoutRoutes);
+
+
+>>>>>>> Stashed changes
+>>>>>>> parent of ecc4410 (Adding checkout page)
 
 // Start the server
 app.listen(3000, () => {

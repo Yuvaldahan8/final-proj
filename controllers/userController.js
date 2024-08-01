@@ -2,34 +2,29 @@ const User = require("../models/user");
 const Product = require("../models/product");
 const bcrypt = require("bcryptjs");
 const Order = require("../models/order");
+
 // Render login page
 exports.renderLogin = (req, res) => {
     res.render("login");
 };
+
 exports.renderProfile = async (req, res) => {
     if (!req.session.user) {
-        res.redirect("/login?message=User is not logged in");
-    } else {
-        const user = req.session.user;
-        let orders = [];
-        if (user) {
-            const userId = req.session.user._id;
-            orders = await Order.find({ user: userId }).populate(
-                "products.product"
-            );
-        }
-
-        res.render("profile", {
-            user,
-            orders,
-        });
+        return res.redirect("/login?message=User is not logged in");
     }
+    
+    const user = req.session.user;
+    const orders = await getUserOrders(user._id);
+
+    res.render("profile", {
+        user,
+        orders,
+    });
 };
+
 exports.renderHome = async (req, res) => {
     const user = req.session.user;
-    const products = await Product.find()
-        .populate("category")
-        .populate("supplier");
+    const products = await Product.find().populate("category").populate("supplier");
 
     res.render("home", {
         user,
@@ -104,38 +99,29 @@ exports.signup = async (req, res) => {
 // Render the edit user page
 exports.renderEditUser = (req, res) => {
     if (!req.session.user) {
-        res.redirect("/login?message=User is not logged in");
-    } else {
-        const user = req.session.user;
-        res.render("editUser", { user, error: "" });
+        return res.redirect("/login?message=User is not logged in");
     }
+    res.render("editUser", { user: req.session.user, error: "" });
 };
 
 // Fetch user's orders and return as JSON
 exports.getUserOrders = async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ message: "User is not logged in" });
+    }
+
     try {
-        // Ensure user is logged in
-        if (!req.session.user) {
-            return res.status(401).json({ message: "User is not logged in" });
-        }
-
-        // Get user ID from session
-        const userId = req.session.user._id;
-
-        // Find orders associated with the user
-        const orders = await Order.find({ user: userId }).populate(
-            "products.product"
-        );
-
-        // Return orders as JSON
+        const orders = await getUserOrders(req.session.user._id);
         res.json(orders);
     } catch (error) {
         console.error("Error fetching user orders:", error);
-        res.status(500).json({
-            message: "An error occurred while fetching the orders.",
-        });
+        res.status(500).json({ message: "An error occurred while fetching the orders." });
     }
 };
+
+async function getUserOrders(userId) {
+    return Order.find({ user: userId }).populate("products.product");
+}
 
 // Handle the user info update
 exports.updateUser = async (req, res) => {
@@ -154,3 +140,4 @@ exports.updateUser = async (req, res) => {
         res.render("editUser", { user, error: "Error updating user info" });
     }
 };
+
